@@ -3,7 +3,7 @@ export function useTheme() {
 
   const setTheme = (newTheme: 'light' | 'dark'): void => {
     theme.value = newTheme
-    if (process.client) {
+    if (typeof window !== 'undefined') {
       localStorage.setItem('theme', newTheme)
       if (newTheme === 'dark') {
         document.documentElement.classList.add('dark')
@@ -18,7 +18,7 @@ export function useTheme() {
   }
 
   onMounted((): void => {
-    if (process.client) {
+    if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
       const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
       
