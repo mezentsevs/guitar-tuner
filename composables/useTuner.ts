@@ -5,7 +5,7 @@ import { useAudio } from './useAudio'
 export function useTuner() {
   const { initialize, getCurrentFrequency, playReferenceNote, isInitialized } = useAudio()
   
-  const currentTuning = ref<Tuning>(PresetTunings[0])
+  const currentTuning = ref<Tuning>(PresetTunings[0]!)
   const customTunings = ref<Tuning[]>([])
   const activeStringIndex = ref<number>(0)
   
