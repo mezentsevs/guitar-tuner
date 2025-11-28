@@ -84,7 +84,8 @@ export function useTuner() {
 
   return {
     currentTuning: readonly(currentTuning),
-    allTunings: readonly(allTunings),
+    allTunings: allTunings,
+    customTunings: customTunings,
     activeStringIndex: readonly(activeStringIndex),
     currentFrequency: readonly(currentFrequency),
     currentNote: readonly(currentNote),

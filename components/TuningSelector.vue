@@ -88,9 +88,9 @@ interface SelectOption {
 }
 
 const props = defineProps<{
-  tunings: Tuning[]
+  tunings: readonly Tuning[]
   currentTuningId: string
-  customTunings: Tuning[]
+  customTunings: readonly Tuning[]
 }>()
 
 const emit = defineEmits<{
