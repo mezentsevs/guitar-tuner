@@ -105,8 +105,8 @@ export class ReferenceAudio {
     oscillator.type = AudioSettings.OscillatorType
 
     gainNode.gain.setValueAtTime(0, this.audioContext.currentTime)
-    gainNode.gain.linearRampToValueAtTime(0.1, this.audioContext.currentTime + AudioSettings.GainRampDuration)
-    gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration / 1000)
+    gainNode.gain.linearRampToValueAtTime(AudioSettings.MaxGain, this.audioContext.currentTime + AudioSettings.GainRampDuration)
+    gainNode.gain.exponentialRampToValueAtTime(AudioSettings.MinGain, this.audioContext.currentTime + duration / 1000)
 
     oscillator.start(this.audioContext.currentTime)
     oscillator.stop(this.audioContext.currentTime + duration / 1000)

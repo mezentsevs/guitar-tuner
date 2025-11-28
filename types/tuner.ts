@@ -88,7 +88,9 @@ export const AudioSettings = {
   FftSize: 2048,
   OscillatorType: 'sine' as OscillatorType,
   GainRampDuration: 0.1,
-  ReferenceNoteDuration: 1000
+  ReferenceNoteDuration: 2000,
+  MinGain: 0.001,
+  MaxGain: 0.3
 } as const
 
 export const TuningPresets = {
