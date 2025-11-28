@@ -1,5 +1,5 @@
 import { PresetTunings, frequencyToNote, getDetectionStatus } from '@/utils/frequency'
-import { type Tuning, type DetectionStatus, TuningPresets, FrequencyConstants } from '@/types/tuner'
+import { type Tuning, TuningPresets, FrequencyConstants, DetectionStatus } from '@/types/tuner'
 import { useAudio } from './useAudio'
 
 export function useTuner() {
