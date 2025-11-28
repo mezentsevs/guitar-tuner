@@ -32,10 +32,12 @@
     <!-- Custom Tuning Modal -->
     <Modal :is-open="showCustomModal" @close="showCustomModal = false">
       <template #title>Add Custom Tuning</template>
-      
+
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tuning Name</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >Tuning Name</label
+          >
           <input
             v-model="newTuning.name"
             type="text"
@@ -46,7 +48,11 @@
 
         <div class="space-y-2">
           <div class="text-sm font-medium text-gray-700 dark:text-gray-300">Strings</div>
-          <div v-for="(string, index) in newTuning.strings" :key="index" class="flex gap-2 items-center">
+          <div
+            v-for="(string, index) in newTuning.strings"
+            :key="index"
+            class="flex gap-2 items-center"
+          >
             <Select
               :model-value="string.note"
               :options="noteOptions"
@@ -60,15 +66,18 @@
               class="flex-1 px-2 py-1 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-colors duration-200"
               placeholder="Frequency"
             />
-            <Button variant="danger" size="sm" @click="removeString(index)" v-if="newTuning.strings.length > 1">
+            <Button
+              variant="danger"
+              size="sm"
+              @click="removeString(index)"
+              v-if="newTuning.strings.length > 1"
+            >
               <IconClose class="w-3 h-3" />
             </Button>
           </div>
         </div>
 
-        <Button @click="addString" variant="secondary" class="w-full">
-          Add String
-        </Button>
+        <Button @click="addString" variant="secondary" class="w-full"> Add String </Button>
       </div>
 
       <template #actions>
@@ -94,38 +103,44 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  'selectTuning': [id: string]
-  'addCustomTuning': [tuning: Tuning]
+  selectTuning: [id: string]
+  addCustomTuning: [tuning: Tuning]
 }>()
 
 const showCustomModal = ref<boolean>(false)
 
 const newTuning = ref<Omit<Tuning, 'id'>>({
   name: '',
-  strings: Array(TuningPresets.DefaultStringCount).fill(null).map((): GuitarString => ({
-    note: Note.E,
-    frequency: 0
-  }))
+  strings: Array(TuningPresets.DefaultStringCount)
+    .fill(null)
+    .map(
+      (): GuitarString => ({
+        note: Note.E,
+        frequency: 0,
+      })
+    ),
 })
 
-const tuningOptions = computed((): SelectOption[] => 
+const tuningOptions = computed((): SelectOption[] =>
   props.tunings.map((tuning: Tuning) => ({
     value: tuning.id,
-    label: tuning.name
+    label: tuning.name,
   }))
 )
 
-const noteOptions = computed((): SelectOption[] => 
+const noteOptions = computed((): SelectOption[] =>
   NoteNames.map((note: Note) => ({
     value: note,
-    label: note
+    label: note,
   }))
 )
 
 const isValidTuning = computed((): boolean => {
-  return newTuning.value.name.trim() !== '' && 
-         newTuning.value.strings.length > 0 &&
-         newTuning.value.strings.every((s: GuitarString) => s.note && s.frequency > 0)
+  return (
+    newTuning.value.name.trim() !== '' &&
+    newTuning.value.strings.length > 0 &&
+    newTuning.value.strings.every((s: GuitarString) => s.note && s.frequency > 0)
+  )
 })
 
 const selectTuning = (id: string): void => {
@@ -150,7 +165,7 @@ const saveCustomTuning = (): void => {
   const tuning: Tuning = {
     id: `${TuningPresets.CustomPrefix}${Date.now()}`,
     name: newTuning.value.name,
-    strings: [...newTuning.value.strings]
+    strings: [...newTuning.value.strings],
   }
 
   emit('addCustomTuning', tuning)
@@ -161,10 +176,14 @@ const saveCustomTuning = (): void => {
 const resetNewTuning = (): void => {
   newTuning.value = {
     name: '',
-    strings: Array(TuningPresets.DefaultStringCount).fill(null).map((): GuitarString => ({
-      note: Note.E,
-      frequency: 0
-    }))
+    strings: Array(TuningPresets.DefaultStringCount)
+      .fill(null)
+      .map(
+        (): GuitarString => ({
+          note: Note.E,
+          frequency: 0,
+        })
+      ),
   }
 }
 </script>

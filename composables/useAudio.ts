@@ -10,7 +10,7 @@ export function useAudio() {
 
     audioProcessor.value = new AudioProcessor()
     referenceAudio.value = new ReferenceAudio()
-    
+
     try {
       await audioProcessor.value.initialize()
       isInitialized.value = true
@@ -41,6 +41,6 @@ export function useAudio() {
     getCurrentFrequency,
     playReferenceNote,
     stop,
-    isInitialized: readonly(isInitialized)
+    isInitialized: readonly(isInitialized),
   }
 }

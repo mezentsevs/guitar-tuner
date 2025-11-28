@@ -1,24 +1,27 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4 transition-colors duration-300">
+  <div
+    class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4 transition-colors duration-300"
+  >
     <div class="max-w-4xl mx-auto">
-      
       <!-- Header -->
       <div class="text-center mb-8 relative">
         <div class="absolute top-0 right-0">
           <ThemeToggle />
         </div>
         <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Guitar Tuner</h1>
-        <p class="text-gray-600 dark:text-gray-400">Professional tuning with real-time audio analysis</p>
+        <p class="text-gray-600 dark:text-gray-400">
+          Professional tuning with real-time audio analysis
+        </p>
       </div>
 
       <!-- Main Content -->
       <div class="grid lg:grid-cols-3 gap-8">
-        
         <!-- Tuning Controls -->
         <div class="lg:col-span-1 space-y-6">
-          
           <!-- Tuning Selector -->
-          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300"
+          >
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tuning</h2>
             <TuningSelector
               :tunings="allTunings"
@@ -30,7 +33,9 @@
           </div>
 
           <!-- Controls -->
-          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300"
+          >
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Controls</h2>
             <div class="space-y-4">
               <Button
@@ -40,7 +45,7 @@
               >
                 {{ isListening ? 'Stop Listening' : 'Start Listening' }}
               </Button>
-              
+
               <Button
                 @click="playActiveString"
                 variant="secondary"
@@ -54,7 +59,9 @@
           </div>
 
           <!-- Frequency Display -->
-          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300"
+          >
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Current Input</h2>
             <div class="text-center space-y-2">
               <div class="text-3xl font-bold text-gray-900 dark:text-white">
@@ -65,14 +72,15 @@
               </div>
             </div>
           </div>
-
         </div>
 
         <!-- Strings Grid -->
         <div class="lg:col-span-2">
-          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300"
+          >
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Strings</h2>
-            
+
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
               <StringIndicator
                 v-for="(string, index) in currentTuning.strings"
@@ -101,9 +109,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
 </template>
@@ -126,7 +132,7 @@ const {
   selectString,
   playActiveString,
   addCustomTuning,
-  selectTuning
+  selectTuning,
 } = useTuner()
 
 const isInitialized = ref<boolean>(false)

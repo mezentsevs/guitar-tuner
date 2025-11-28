@@ -1,12 +1,12 @@
-import { 
-  TuningId, 
-  Note, 
-  FrequencyConstants, 
-  DetectionThresholds, 
+import {
+  TuningId,
+  Note,
+  FrequencyConstants,
+  DetectionThresholds,
   StandardFrequencies,
   NoteNames,
-  type Tuning, 
-  DetectionStatus 
+  type Tuning,
+  DetectionStatus,
 } from '@/types/tuner'
 
 export const PresetTunings: Tuning[] = [
@@ -19,8 +19,8 @@ export const PresetTunings: Tuning[] = [
       { note: Note.D, frequency: StandardFrequencies.D3 },
       { note: Note.G, frequency: StandardFrequencies.G3 },
       { note: Note.B, frequency: StandardFrequencies.B3 },
-      { note: Note.E, frequency: StandardFrequencies.E4 }
-    ]
+      { note: Note.E, frequency: StandardFrequencies.E4 },
+    ],
   },
   {
     id: TuningId.DropD,
@@ -31,8 +31,8 @@ export const PresetTunings: Tuning[] = [
       { note: Note.D, frequency: StandardFrequencies.D3 },
       { note: Note.G, frequency: StandardFrequencies.G3 },
       { note: Note.B, frequency: StandardFrequencies.B3 },
-      { note: Note.E, frequency: StandardFrequencies.E4 }
-    ]
+      { note: Note.E, frequency: StandardFrequencies.E4 },
+    ],
   },
   {
     id: TuningId.HalfStepDown,
@@ -43,8 +43,8 @@ export const PresetTunings: Tuning[] = [
       { note: Note.CSharp, frequency: StandardFrequencies.CSharp3 },
       { note: Note.FSharp, frequency: StandardFrequencies.FSharp3 },
       { note: Note.ASharp, frequency: StandardFrequencies.ASharp3 },
-      { note: Note.DSharp, frequency: StandardFrequencies.DSharp4 }
-    ]
+      { note: Note.DSharp, frequency: StandardFrequencies.DSharp4 },
+    ],
   },
   {
     id: TuningId.DropC,
@@ -55,8 +55,8 @@ export const PresetTunings: Tuning[] = [
       { note: Note.C, frequency: StandardFrequencies.C3 },
       { note: Note.F, frequency: StandardFrequencies.F3 },
       { note: Note.A, frequency: StandardFrequencies.A3 },
-      { note: Note.D, frequency: StandardFrequencies.D4 }
-    ]
+      { note: Note.D, frequency: StandardFrequencies.D4 },
+    ],
   },
   {
     id: TuningId.OpenG,
@@ -67,9 +67,9 @@ export const PresetTunings: Tuning[] = [
       { note: Note.D, frequency: StandardFrequencies.D3 },
       { note: Note.G, frequency: StandardFrequencies.G3 },
       { note: Note.B, frequency: StandardFrequencies.B3 },
-      { note: Note.D, frequency: StandardFrequencies.D4 }
-    ]
-  }
+      { note: Note.D, frequency: StandardFrequencies.D4 },
+    ],
+  },
 ]
 
 export function frequencyToNote(frequency: number): { note: Note; cents: number } {
@@ -77,10 +77,10 @@ export function frequencyToNote(frequency: number): { note: Note; cents: number 
   const h: number = Math.round(12 * Math.log2(frequency / C0))
   const noteIndex: number = h % 12
   const note: Note = NoteNames[noteIndex]!
-  
+
   const exactFrequency: number = C0 * Math.pow(2, h / 12)
   const cents: number = Math.round(1200 * Math.log2(frequency / exactFrequency))
-  
+
   return { note, cents }
 }
 

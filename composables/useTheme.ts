@@ -21,7 +21,7 @@ export function useTheme() {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
       const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      
+
       const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light')
       setTheme(initialTheme)
     }
@@ -30,6 +30,6 @@ export function useTheme() {
   return {
     theme: readonly(theme),
     setTheme,
-    toggleTheme
+    toggleTheme,
   }
 }

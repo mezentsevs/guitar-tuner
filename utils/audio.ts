@@ -13,11 +13,11 @@ export class AudioProcessor {
       this.analyser = this.audioContext.createAnalyser()
       this.analyser.fftSize = AudioSettings.FftSize
       this.dataArray = new Float32Array(this.analyser.frequencyBinCount)
-      
+
       this.stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       this.microphone = this.audioContext.createMediaStreamSource(this.stream)
       this.microphone.connect(this.analyser)
-    } catch (error) {
+    } catch {
       throw new Error('Microphone access denied')
     }
   }
@@ -25,15 +25,14 @@ export class AudioProcessor {
   getFrequency(): number | null {
     if (!this.analyser || !this.dataArray) return null
 
-    /**
-     * Using any is justified here due to TypeScript and Web Audio API type incompatibility
-     * Web Audio API expects Float32Array<ArrayBuffer> but TypeScript's DOM types
-     * define it as accepting Float32Array<ArrayBufferLike>. This is a known type
-     * definition issue that doesn't affect runtime behavior.
-     * We control the Float32Array creation and know it's correct at runtime.
-     */
+    // Using any is justified here due to TypeScript and Web Audio API type incompatibility
+    // Web Audio API expects Float32Array<ArrayBuffer> but TypeScript's DOM types
+    // define it as accepting Float32Array<ArrayBufferLike>. This is a known type
+    // definition issue that doesn't affect runtime behavior.
+    // We control the Float32Array creation and know it's correct at runtime.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.analyser.getFloatTimeDomainData(this.dataArray as any)
-    
+
     const sampleRate: number = this.audioContext?.sampleRate || 44100
     return this.autoCorrelate(this.dataArray, sampleRate)
   }
@@ -62,7 +61,10 @@ export class AudioProcessor {
       }
 
       correlation = 1 - correlation / maxSamples
-      if (correlation > FrequencyConstants.GoodCorrelationThreshold && correlation > lastCorrelation) {
+      if (
+        correlation > FrequencyConstants.GoodCorrelationThreshold &&
+        correlation > lastCorrelation
+      ) {
         foundGoodCorrelation = true
         if (correlation > bestCorrelation) {
           bestCorrelation = correlation
@@ -105,8 +107,14 @@ export class ReferenceAudio {
     oscillator.type = AudioSettings.OscillatorType
 
     gainNode.gain.setValueAtTime(0, this.audioContext.currentTime)
-    gainNode.gain.linearRampToValueAtTime(AudioSettings.MaxGain, this.audioContext.currentTime + AudioSettings.GainRampDuration)
-    gainNode.gain.exponentialRampToValueAtTime(AudioSettings.MinGain, this.audioContext.currentTime + duration / 1000)
+    gainNode.gain.linearRampToValueAtTime(
+      AudioSettings.MaxGain,
+      this.audioContext.currentTime + AudioSettings.GainRampDuration
+    )
+    gainNode.gain.exponentialRampToValueAtTime(
+      AudioSettings.MinGain,
+      this.audioContext.currentTime + duration / 1000
+    )
 
     oscillator.start(this.audioContext.currentTime)
     oscillator.stop(this.audioContext.currentTime + duration / 1000)

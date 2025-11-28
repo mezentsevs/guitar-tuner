@@ -15,8 +15,8 @@ export default [
       '.output/**',
       '*.json',
       '*.config.js',
-      '*.config.ts'
-    ]
+      '*.config.ts',
+    ],
   },
   {
     files: ['**/*.vue'],
@@ -26,19 +26,19 @@ export default [
       globals: globals.browser,
       parser: vue.parser,
       parserOptions: {
-        parser: typescriptParser
-      }
+        parser: typescriptParser,
+      },
     },
     plugins: {
       vue,
-      prettier
+      prettier,
     },
     rules: {
       'prettier/prettier': 'error',
       'vue/html-self-closing': 'error',
       'vue/attributes-order': 'error',
-      'vue/order-in-components': 'error'
-    }
+      'vue/order-in-components': 'error',
+    },
   },
   {
     files: ['**/*.ts'],
@@ -47,20 +47,20 @@ export default [
       sourceType: 'module',
       globals: {
         ...globals.browser,
-        ...globals.node
+        ...globals.node,
       },
-      parser: typescriptParser
+      parser: typescriptParser,
     },
     plugins: {
       '@typescript-eslint': typescript,
-      prettier
+      prettier,
     },
     rules: {
       'prettier/prettier': 'error',
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
-      'no-console': 'warn'
-    }
+      'no-console': 'warn',
+    },
   },
   {
     files: ['**/*.js'],
@@ -70,16 +70,16 @@ export default [
       sourceType: 'module',
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
+        ...globals.node,
+      },
     },
     plugins: {
-      prettier
+      prettier,
     },
     rules: {
       'prettier/prettier': 'error',
       'no-console': 'warn',
-      'no-unused-vars': 'warn'
-    }
-  }
+      'no-unused-vars': 'warn',
+    },
+  },
 ]
