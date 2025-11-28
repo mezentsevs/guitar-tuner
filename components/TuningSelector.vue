@@ -140,8 +140,8 @@ const removeString = (index: number): void => {
   newTuning.value.strings.splice(index, 1)
 }
 
-const updateStringNote = (index: number, note: Note): void => {
-  newTuning.value.strings[index]!.note = note
+const updateStringNote = (index: number, note: string): void => {
+  newTuning.value.strings[index]!.note = note as Note
 }
 
 const saveCustomTuning = (): void => {
