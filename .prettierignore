@@ -1,0 +1,8 @@
+node_modules/
+dist/
+public/
+.nuxt/
+.output/
+*.log
+*.min.js
+*.min.css
