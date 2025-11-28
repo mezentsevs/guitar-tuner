@@ -1,9 +1,9 @@
 import globals from 'globals'
 import js from '@eslint/js'
-import vue from 'eslint-plugin-vue'
+import prettier from 'eslint-plugin-prettier'
 import typescript from '@typescript-eslint/eslint-plugin'
 import typescriptParser from '@typescript-eslint/parser'
-import prettier from 'eslint-plugin-prettier'
+import vue from 'eslint-plugin-vue'
 
 export default [
   {

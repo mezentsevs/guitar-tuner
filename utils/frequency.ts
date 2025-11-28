@@ -1,12 +1,12 @@
 import {
-  TuningId,
-  Note,
-  FrequencyConstants,
-  DetectionThresholds,
-  StandardFrequencies,
-  NoteNames,
-  type Tuning,
   DetectionStatus,
+  DetectionThresholds,
+  FrequencyConstants,
+  Note,
+  NoteNames,
+  StandardFrequencies,
+  TuningId,
+  type Tuning,
 } from '@/types/tuner'
 
 export const PresetTunings: Tuning[] = [

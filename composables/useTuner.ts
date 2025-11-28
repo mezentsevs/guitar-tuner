@@ -99,7 +99,6 @@ export function useTuner() {
     isListening: readonly(isListening),
     detectionStatus: readonly(detectionStatus),
     activeString: readonly(activeString),
-
     startListening,
     stopListening,
     selectString,
