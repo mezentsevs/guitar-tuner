@@ -25,7 +25,14 @@ export class AudioProcessor {
   getFrequency(): number | null {
     if (!this.analyser || !this.dataArray) return null
 
-    this.analyser.getFloatTimeDomainData(this.dataArray)
+    /**
+     * Using any is justified here due to TypeScript and Web Audio API type incompatibility
+     * Web Audio API expects Float32Array<ArrayBuffer> but TypeScript's DOM types
+     * define it as accepting Float32Array<ArrayBufferLike>. This is a known type
+     * definition issue that doesn't affect runtime behavior.
+     * We control the Float32Array creation and know it's correct at runtime.
+     */
+    this.analyser.getFloatTimeDomainData(this.dataArray as any)
     
     const sampleRate: number = this.audioContext?.sampleRate || 44100
     return this.autoCorrelate(this.dataArray, sampleRate)
