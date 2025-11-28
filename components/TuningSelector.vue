@@ -141,7 +141,7 @@ const removeString = (index: number): void => {
 }
 
 const updateStringNote = (index: number, note: Note): void => {
-  newTuning.value.strings[index].note = note
+  newTuning.value.strings[index]!.note = note
 }
 
 const saveCustomTuning = (): void => {
