@@ -77,7 +77,7 @@ export function frequencyToNote(frequency: number): { note: Note; cents: number 
   const h: number = Math.round(12 * Math.log2(frequency / C0))
   const octave: number = Math.floor(h / 12)
   const noteIndex: number = h % 12
-  const note: Note = NoteNames[noteIndex]
+  const note: Note = NoteNames[noteIndex]!
   
   const exactFrequency: number = C0 * Math.pow(2, h / 12)
   const cents: number = Math.round(1200 * Math.log2(frequency / exactFrequency))
