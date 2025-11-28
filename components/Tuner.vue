@@ -121,8 +121,6 @@ const {
   deviation,
   isListening,
   detectionStatus,
-  activeString,
-  
   startListening,
   stopListening,
   selectString,
