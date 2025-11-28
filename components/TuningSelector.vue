@@ -25,7 +25,7 @@
 
     <!-- Add Custom Tuning -->
     <Button variant="secondary" @click="showCustomModal = true" class="w-full">
-      <IconTune class="w-4 h-4 mr-2" />
+      <TuneIcon class="w-4 h-4 mr-2" />
       Add Custom Tuning
     </Button>
 
@@ -72,7 +72,7 @@
               @click="removeString(index)"
               v-if="newTuning.strings.length > 1"
             >
-              <IconClose class="w-3 h-3" />
+              <CloseIcon class="w-3 h-3" />
             </Button>
           </div>
         </div>

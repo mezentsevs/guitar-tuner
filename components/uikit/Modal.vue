@@ -16,7 +16,7 @@
               @click="$emit('close')"
               class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
             >
-              <IconClose class="w-5 h-5" />
+              <CloseIcon class="w-5 h-5" />
             </button>
           </div>
           <div class="text-gray-600 dark:text-gray-400">

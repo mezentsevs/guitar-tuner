@@ -37,7 +37,7 @@
       @click="$emit('play')"
       class="transition-transform hover:scale-105"
     >
-      <IconPlay class="w-4 h-4" />
+      <PlayIcon class="w-4 h-4" />
     </Button>
 
     <!-- Status Indicator -->

@@ -52,7 +52,7 @@
                 class="w-full"
                 :disabled="!isInitialized"
               >
-                <IconPlay class="w-4 h-4 mr-2" />
+                <PlayIcon class="w-4 h-4 mr-2" />
                 Play Reference
               </Button>
             </div>
