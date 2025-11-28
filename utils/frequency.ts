@@ -75,7 +75,6 @@ export const PresetTunings: Tuning[] = [
 export function frequencyToNote(frequency: number): { note: Note; cents: number } {
   const C0: number = FrequencyConstants.C0
   const h: number = Math.round(12 * Math.log2(frequency / C0))
-  const octave: number = Math.floor(h / 12)
   const noteIndex: number = h % 12
   const note: Note = NoteNames[noteIndex]!
   
