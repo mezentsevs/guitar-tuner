@@ -47,7 +47,7 @@ export class AudioProcessor {
     let foundGoodCorrelation: boolean = false
 
     for (let i = 0; i < size; i++) {
-      const val: number = buffer[i]
+      const val: number = buffer[i]!
       rms += val * val
     }
     rms = Math.sqrt(rms / size)
@@ -58,7 +58,7 @@ export class AudioProcessor {
       let correlation: number = 0
 
       for (let i = 0; i < maxSamples; i++) {
-        correlation += Math.abs(buffer[i] - buffer[i + offset])
+        correlation += Math.abs(buffer[i]! - buffer[i + offset]!)
       }
 
       correlation = 1 - correlation / maxSamples
