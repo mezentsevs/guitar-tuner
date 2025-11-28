@@ -19,7 +19,7 @@ export function useTuner() {
 
   const allTunings = computed((): Tuning[] => [...PresetTunings, ...customTunings.value])
 
-  const activeString = computed((): Tuning['strings'][0] => currentTuning.value.strings[activeStringIndex.value])
+  const activeString = computed((): Tuning['strings'][0] => currentTuning.value.strings[activeStringIndex.value]!)
 
   const startListening = async (): Promise<void> => {
     if (!isInitialized.value) {
