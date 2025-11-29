@@ -11,7 +11,7 @@ export class AudioProcessor {
         try {
             this.audioContext = new AudioContext();
             this.analyser = this.audioContext.createAnalyser();
-            this.analyser.fftSize = AudioSettings.FftSize;
+            this.analyser.fftSize = 4096;
             this.dataArray = new Float32Array(this.analyser.frequencyBinCount);
 
             this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -49,10 +49,15 @@ export class AudioProcessor {
             const val: number = buffer[i]!;
             rms += val * val;
         }
+
         rms = Math.sqrt(rms / size);
-        if (rms < FrequencyConstants.RmsThreshold) return null;
+
+        if (rms < FrequencyConstants.RmsThreshold) {
+            return null;
+        }
 
         let lastCorrelation: number = 1;
+
         for (let offset = DetectionThresholds.InitialOffset; offset < maxSamples; offset++) {
             let correlation: number = 0;
 

@@ -3,6 +3,17 @@ import { useAudio } from './useAudio';
 import { PresetTunings, frequencyToNote, getDetectionStatus } from '@/utils/frequency';
 import { type Tuning, TuningPresets, FrequencyConstants, DetectionStatus } from '@/types/tuner';
 
+const LOW_FREQUENCY_THRESHOLD_HZ = 100;
+const LOW_FREQ_BUFFER_SIZE = 15;
+const HIGH_FREQ_BUFFER_SIZE = 12;
+const LOW_FREQ_SUCCESS_THRESHOLD_CENTS = 22;
+const HIGH_FREQ_SUCCESS_THRESHOLD_CENTS = 20;
+const LOW_FREQ_STABILITY_DURATION_MS = 700;
+const HIGH_FREQ_STABILITY_DURATION_MS = 600;
+const SUCCESS_SOUND_COOLDOWN_MS = 1500;
+const SUCCESS_SOUND_DURATION_MS = 300;
+const SUCCESS_SOUND_VOLUME = 0.8;
+
 export function useTuner() {
     const { initialize, getCurrentFrequency, playReferenceNote, isInitialized } = useAudio();
 
@@ -22,7 +33,6 @@ export function useTuner() {
 
     const frequencyBuffer = ref<number[]>([]);
     const deviationBuffer = ref<number[]>([]);
-    const bufferSize = 25;
 
     let animationFrameId: number;
 
@@ -32,10 +42,29 @@ export function useTuner() {
         (): Tuning['strings'][0] => currentTuning.value.strings[activeStringIndex.value]!,
     );
 
+    const getBufferSize = computed((): number =>
+        activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ
+            ? LOW_FREQ_BUFFER_SIZE
+            : HIGH_FREQ_BUFFER_SIZE,
+    );
+
+    const getSuccessThreshold = computed((): number =>
+        activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ
+            ? LOW_FREQ_SUCCESS_THRESHOLD_CENTS
+            : HIGH_FREQ_SUCCESS_THRESHOLD_CENTS,
+    );
+
+    const getRequiredDuration = computed((): number =>
+        activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ
+            ? LOW_FREQ_STABILITY_DURATION_MS
+            : HIGH_FREQ_STABILITY_DURATION_MS,
+    );
+
     const startListening = async (): Promise<void> => {
         if (!isInitialized.value) {
             await initialize();
         }
+
         isListening.value = true;
         frequencyBuffer.value = [];
         deviationBuffer.value = [];
@@ -44,21 +73,31 @@ export function useTuner() {
 
     const stopListening = (): void => {
         isListening.value = false;
+
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
+
         resetTuneDetection();
     };
 
     const smoothValue = (buffer: number[], newValue: number): number => {
         buffer.push(newValue);
-        if (buffer.length > bufferSize) {
+
+        if (buffer.length > getBufferSize.value) {
             buffer.shift();
         }
 
-        const sorted = [...buffer].sort((a, b) => a - b);
-        const mid = Math.floor(sorted.length / 2);
-        return sorted.length % 2 === 0 ? (sorted[mid - 1]! + sorted[mid]!) / 2 : sorted[mid]!;
+        let sum = 0;
+        let weightSum = 0;
+
+        for (let i = 0; i < buffer.length; i++) {
+            const weight = (i + 1) / buffer.length;
+            sum += buffer[i]! * weight;
+            weightSum += weight;
+        }
+
+        return sum / weightSum;
     };
 
     const analyzeAudio = (): void => {
@@ -96,7 +135,7 @@ export function useTuner() {
 
     const handleSuccessSound = (currentDeviation: number): void => {
         const now: number = Date.now();
-        const isPreciselyInTune: boolean = Math.abs(currentDeviation) <= 10;
+        const isPreciselyInTune: boolean = Math.abs(currentDeviation) <= getSuccessThreshold.value;
 
         if (isPreciselyInTune) {
             if (inTuneStartTime.value === 0) {
@@ -106,18 +145,19 @@ export function useTuner() {
                 const tuneDuration: number = now - inTuneStartTime.value;
 
                 if (
-                    tuneDuration >= 800 &&
+                    tuneDuration >= getRequiredDuration.value &&
                     !hasPlayedSuccessSound.value &&
                     !successSoundCooldown.value
                 ) {
                     playSuccessSound();
-                    hasPlayedSuccessSound.value = true;
 
+                    hasPlayedSuccessSound.value = true;
                     successSoundCooldown.value = true;
+
                     setTimeout((): void => {
                         successSoundCooldown.value = false;
                         hasPlayedSuccessSound.value = false;
-                    }, 1500);
+                    }, SUCCESS_SOUND_COOLDOWN_MS);
                 }
             }
         } else {
@@ -127,7 +167,12 @@ export function useTuner() {
 
     const playSuccessSound = (): void => {
         const baseFrequency: number = activeString.value.frequency;
-        playReferenceNote({ frequency: baseFrequency * 2, duration: 300, volume: 0.8 });
+
+        playReferenceNote({
+            frequency: baseFrequency * 2,
+            duration: SUCCESS_SOUND_DURATION_MS,
+            volume: SUCCESS_SOUND_VOLUME,
+        });
     };
 
     const resetTuneDetection = (): void => {
@@ -158,6 +203,7 @@ export function useTuner() {
 
     const selectTuning = (tuningId: string): void => {
         const tuning: Tuning | undefined = allTunings.value.find((t: Tuning) => t.id === tuningId);
+
         if (tuning) {
             currentTuning.value = tuning;
             selectString(0);
