@@ -1,5 +1,5 @@
 <template>
-  <div>
-    <Tuner />
-  </div>
+    <div>
+        <Tuner />
+    </div>
 </template>
