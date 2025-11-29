@@ -1,5 +1,11 @@
 import { AudioProcessor, ReferenceAudio } from '@/utils/audio';
 
+interface PlayNoteParams {
+    frequency: number;
+    duration?: number;
+    volume?: number;
+}
+
 export function useAudio() {
     const audioProcessor = ref<AudioProcessor | null>(null);
     const referenceAudio = ref<ReferenceAudio | null>(null);
@@ -23,8 +29,8 @@ export function useAudio() {
         return audioProcessor.value?.getFrequency() || null;
     };
 
-    const playReferenceNote = (frequency: number): void => {
-        referenceAudio.value?.playFrequency(frequency);
+    const playReferenceNote = (params: PlayNoteParams): void => {
+        referenceAudio.value?.playFrequency(params.frequency, params.duration, params.volume);
     };
 
     const stop = (): void => {
