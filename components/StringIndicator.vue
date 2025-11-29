@@ -61,11 +61,6 @@
             @click="$emit('play')">
             <PlayIcon class="w-4 h-4" />
         </Button>
-
-        <!-- Status Indicator -->
-        <div
-            class="mt-2 w-3 h-3 rounded-full transition-colors duration-300"
-            :class="statusColor" />
     </div>
 </template>
 
@@ -104,19 +99,6 @@ const centColor = computed((): string => {
         return 'text-blue-600 dark:text-blue-400';
     } else {
         return 'text-red-600 dark:text-red-400';
-    }
-});
-
-const statusColor = computed((): string => {
-    switch (props.status) {
-        case DetectionStatus.InTune:
-            return 'bg-green-500 shadow-lg shadow-green-500/50';
-        case DetectionStatus.TooLow:
-            return 'bg-blue-500 shadow-lg shadow-blue-500/50';
-        case DetectionStatus.TooHigh:
-            return 'bg-red-500 shadow-lg shadow-red-500/50';
-        default:
-            return 'bg-gray-400 dark:bg-gray-500';
     }
 });
 
