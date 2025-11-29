@@ -92,7 +92,7 @@ export class AudioProcessor {
 export class ReferenceAudio {
     private audioContext: AudioContext | null = null;
 
-    playFrequency(frequency: number, duration: number = AudioSettings.ReferenceNoteDuration): void {
+    playFrequency(frequency: number): void {
         if (!this.audioContext) {
             this.audioContext = new AudioContext();
         }
@@ -113,10 +113,10 @@ export class ReferenceAudio {
         );
         gainNode.gain.exponentialRampToValueAtTime(
             AudioSettings.MinGain,
-            this.audioContext.currentTime + duration / 1000,
+            this.audioContext.currentTime + AudioSettings.ReferenceNoteDuration / 1000,
         );
 
         oscillator.start(this.audioContext.currentTime);
-        oscillator.stop(this.audioContext.currentTime + duration / 1000);
+        oscillator.stop(this.audioContext.currentTime + AudioSettings.ReferenceNoteDuration / 1000);
     }
 }

@@ -16,6 +16,10 @@ export function useTuner() {
     const isListening = ref<boolean>(false);
     const detectionStatus = ref<DetectionStatus>(DetectionStatus.Unstable);
 
+    const frequencyBuffer = ref<number[]>([]);
+    const deviationBuffer = ref<number[]>([]);
+    const bufferSize = 8;
+
     let animationFrameId: number;
 
     const allTunings = computed((): Tuning[] => [...PresetTunings, ...customTunings.value]);
@@ -28,32 +32,66 @@ export function useTuner() {
         if (!isInitialized.value) {
             await initialize();
         }
+
         isListening.value = true;
+        frequencyBuffer.value = [];
+        deviationBuffer.value = [];
         analyzeAudio();
     };
 
     const stopListening = (): void => {
         isListening.value = false;
+
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
     };
 
+    const smoothValue = (buffer: number[], newValue: number): number => {
+        buffer.push(newValue);
+
+        if (buffer.length > bufferSize) {
+            buffer.shift();
+        }
+
+        // Use weighted average for better smoothing (recent values have more weight)
+        let sum = 0;
+        let weightSum = 0;
+
+        for (let i = 0; i < buffer.length; i++) {
+            const weight = (i + 1) / buffer.length; // Linear weights
+            sum += buffer[i]! * weight;
+            weightSum += weight;
+        }
+
+        return sum / weightSum;
+    };
+
     const analyzeAudio = (): void => {
         if (!isListening.value) return;
 
-        const frequency: number | null = getCurrentFrequency();
+        const rawFrequency: number | null = getCurrentFrequency();
 
         if (
-            frequency &&
-            frequency > FrequencyConstants.MinDetection &&
-            frequency < FrequencyConstants.MaxDetection
+            rawFrequency &&
+            rawFrequency > FrequencyConstants.MinDetection &&
+            rawFrequency < FrequencyConstants.MaxDetection
         ) {
-            currentFrequency.value = frequency;
-            const { note, cents } = frequencyToNote(frequency);
+            const smoothedFrequency: number = smoothValue(frequencyBuffer.value, rawFrequency);
+            currentFrequency.value = smoothedFrequency;
+
+            const { note, cents } = frequencyToNote(smoothedFrequency);
             currentNote.value = note;
-            deviation.value = cents;
-            detectionStatus.value = getDetectionStatus(cents);
+
+            const smoothedDeviation: number = smoothValue(deviationBuffer.value, cents);
+            deviation.value = Math.round(smoothedDeviation);
+
+            const newStatus: DetectionStatus = getDetectionStatus(smoothedDeviation);
+            detectionStatus.value = newStatus;
+        } else {
+            detectionStatus.value = DetectionStatus.Unstable;
+            frequencyBuffer.value = [];
+            deviationBuffer.value = [];
         }
 
         animationFrameId = requestAnimationFrame(analyzeAudio);
@@ -64,6 +102,8 @@ export function useTuner() {
         currentFrequency.value = 0;
         deviation.value = 0;
         detectionStatus.value = DetectionStatus.Unstable;
+        frequencyBuffer.value = [];
+        deviationBuffer.value = [];
     };
 
     const playActiveString = (): void => {
