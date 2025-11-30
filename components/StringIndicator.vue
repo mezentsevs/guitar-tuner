@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col items-center p-4 rounded-xl shadow-sm border transition-all duration-200"
+        class="flex flex-col items-center p-4 rounded-xl shadow-sm border transition-all duration-200 cursor-pointer hover:scale-105"
         :class="[
             baseCardClass,
             {
@@ -14,7 +14,8 @@
                     isActive && status === DetectionStatus.Unstable,
                 'scale-105': isActive && isPlaying,
             },
-        ]">
+        ]"
+        @click="$emit('select')">
         <!-- String Info -->
         <div class="text-center mb-4">
             <div class="text-2xl font-bold text-gray-900 dark:text-white">{{ string.note }}</div>
@@ -58,7 +59,7 @@
             size="sm"
             variant="secondary"
             class="transition-transform duration-200 hover:scale-105"
-            @click="$emit('play')">
+            @click="handlePlayClick">
             <PlayIcon class="w-4 h-4" />
         </Button>
     </div>
@@ -67,7 +68,8 @@
 <script setup lang="ts">
 import { DetectionStatus, type GuitarString } from '@/types/tuner';
 
-defineEmits<{
+const emit = defineEmits<{
+    select: [];
     play: [];
 }>();
 
@@ -78,6 +80,11 @@ const props = defineProps<{
     isActive: boolean;
     isPlaying: boolean;
 }>();
+
+const handlePlayClick = (event: MouseEvent): void => {
+    event.stopPropagation();
+    emit('play');
+};
 
 const baseCardClass = computed((): string => {
     return props.isActive
