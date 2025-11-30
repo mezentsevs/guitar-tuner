@@ -94,7 +94,7 @@
                                 "
                                 :is-active="activeStringIndex === index"
                                 :is-playing="isPlayingReference && activeStringIndex === index"
-                                class="cursor-pointer transition-transform hover:scale-105"
+                                class="cursor-pointer hover:scale-105"
                                 @play="playString(index)" />
                         </div>
 

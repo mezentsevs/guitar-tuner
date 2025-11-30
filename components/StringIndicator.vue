@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col items-center p-4 rounded-xl shadow-sm border transition-all duration-300"
+        class="flex flex-col items-center p-4 rounded-xl shadow-sm border transition-all duration-200"
         :class="[
             baseCardClass,
             {
@@ -43,7 +43,7 @@
 
             <!-- Moving Indicator -->
             <div
-                class="absolute top-0 w-3 h-3 bg-white rounded-full transform -translate-x-1/2 transition-all duration-300 border-2 border-white shadow-md dark:shadow-lg"
+                class="absolute top-0 w-3 h-3 bg-white rounded-full transform -translate-x-1/2 transition-all duration-200 border-2 border-white shadow-md dark:shadow-lg"
                 :class="indicatorShadow"
                 :style="{ left: `${deviationPosition}%` }" />
         </div>
@@ -57,7 +57,7 @@
         <Button
             size="sm"
             variant="secondary"
-            class="transition-transform hover:scale-105"
+            class="transition-transform duration-200 hover:scale-105"
             @click="$emit('play')">
             <PlayIcon class="w-4 h-4" />
         </Button>
