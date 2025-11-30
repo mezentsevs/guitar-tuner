@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col items-center p-3 rounded-xl shadow-sm border transition-all duration-200 cursor-pointer hover:scale-105 w-full max-w-[150px] mx-auto"
+        class="flex flex-col items-center p-3 rounded-xl shadow-sm border transition-all duration-200 cursor-pointer hover:scale-105 w-40 h-48"
         :class="[
             baseCardClass,
             {
