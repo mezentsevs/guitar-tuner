@@ -45,11 +45,7 @@
                                 {{ isListening ? 'Stop Listening' : 'Start Listening' }}
                             </Button>
 
-                            <Button
-                                variant="secondary"
-                                class="w-full"
-                                :disabled="!isInitialized"
-                                @click="playActiveString">
+                            <Button variant="secondary" class="w-full" @click="playActiveString">
                                 <PlayIcon class="w-4 h-4 mr-2" />
                                 Play Reference
                             </Button>
@@ -137,7 +133,6 @@ const {
     selectTuning,
 } = useTuner();
 
-const isInitialized = ref<boolean>(false);
 const isPlayingReference = ref<boolean>(false);
 
 const toggleListening = async (): Promise<void> => {
@@ -146,7 +141,6 @@ const toggleListening = async (): Promise<void> => {
     } else {
         try {
             await startListening();
-            isInitialized.value = true;
         } catch (error) {
             alert('Please allow microphone access to use the tuner');
         }

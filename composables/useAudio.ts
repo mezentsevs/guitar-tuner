@@ -11,6 +11,8 @@ export function useAudio() {
     const referenceAudio = ref<ReferenceAudio | null>(null);
     const isInitialized = ref<boolean>(false);
 
+    let isPlaybackReady = false;
+
     const initialize = async (): Promise<void> => {
         if (isInitialized.value) return;
 
@@ -25,11 +27,22 @@ export function useAudio() {
         }
     };
 
+    const initializePlayback = (): void => {
+        if (isPlaybackReady) return;
+
+        referenceAudio.value = new ReferenceAudio();
+        isPlaybackReady = true;
+    };
+
     const getCurrentFrequency = (): number | null => {
         return audioProcessor.value?.getFrequency() || null;
     };
 
     const playReferenceNote = (params: PlayNoteParams): void => {
+        if (!isPlaybackReady) {
+            initializePlayback();
+        }
+
         referenceAudio.value?.playFrequency(params.frequency, params.duration, params.volume);
     };
 
