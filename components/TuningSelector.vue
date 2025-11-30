@@ -22,8 +22,8 @@
         </div>
 
         <!-- Add Custom Tuning -->
-        <Button variant="secondary" class="w-full" @click="showCustomModal = true">
-            <TuneIcon class="w-4 h-4 mr-2" />
+        <Button variant="secondary" class="w-full h-10" @click="showCustomModal = true">
+            <PlusIcon class="w-4 h-4 mr-2" />
             Add Custom Tuning
         </Button>
 
@@ -70,7 +70,9 @@
                     </div>
                 </div>
 
-                <Button variant="secondary" class="w-full" @click="addString">Add String</Button>
+                <Button variant="secondary" class="w-full h-10" @click="addString">
+                    Add String
+                </Button>
             </div>
 
             <template #actions>

@@ -40,12 +40,16 @@
                         <div class="space-y-4">
                             <Button
                                 :variant="isListening ? 'danger' : 'primary'"
-                                class="w-full"
+                                class="w-full h-10"
                                 @click="toggleListening">
+                                <MicrophoneIcon class="w-4 h-4 mr-2" />
                                 {{ isListening ? 'Stop Listening' : 'Start Listening' }}
                             </Button>
 
-                            <Button variant="secondary" class="w-full" @click="playActiveString">
+                            <Button
+                                variant="secondary"
+                                class="w-full h-10"
+                                @click="playActiveString">
                                 <PlayIcon class="w-4 h-4 mr-2" />
                                 Play Reference
                             </Button>
