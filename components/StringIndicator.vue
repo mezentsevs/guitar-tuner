@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col items-center p-4 rounded-xl shadow-sm border transition-all duration-200 cursor-pointer hover:scale-105"
+        class="flex flex-col items-center p-3 rounded-xl shadow-sm border transition-all duration-200 cursor-pointer hover:scale-105 w-full max-w-[150px] mx-auto"
         :class="[
             baseCardClass,
             {
@@ -17,15 +17,17 @@
         ]"
         @click="$emit('select')">
         <!-- String Info -->
-        <div class="text-center mb-4">
-            <div class="text-2xl font-bold text-gray-900 dark:text-white">{{ string.note }}</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">
+        <div class="text-center mb-3 w-full">
+            <div class="text-xl font-bold text-gray-900 dark:text-white truncate">
+                {{ string.note }}
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 truncate">
                 {{ string.frequency.toFixed(2) }} Hz
             </div>
         </div>
 
         <!-- Deviation Indicator -->
-        <div class="w-32 h-3 bg-gray-900 rounded-full mb-4 relative overflow-hidden shadow-inner">
+        <div class="w-full h-3 bg-gray-900 rounded-full mb-3 relative overflow-hidden shadow-inner">
             <!-- Background Gradient -->
             <div
                 class="absolute inset-0 bg-gradient-to-r from-blue-500 via-green-500 to-red-500 opacity-90" />
@@ -50,7 +52,7 @@
         </div>
 
         <!-- Cent Display -->
-        <div class="text-lg font-semibold mb-4 font-mono" :class="centColor">
+        <div class="text-base font-semibold mb-3 font-mono" :class="centColor">
             {{ deviation > 0 ? '+' : '' }}{{ deviation }}
         </div>
 

@@ -1,25 +1,10 @@
 <template>
     <div class="space-y-4">
-        <!-- Preset Tunings -->
+        <!-- Tuning Selector -->
         <Select
             :model-value="currentTuningId"
             :options="tuningOptions"
             @update:model-value="selectTuning" />
-
-        <!-- Custom Tunings -->
-        <div v-if="customTunings.length > 0" class="space-y-2">
-            <div class="text-sm font-medium text-gray-700 dark:text-gray-300">Custom Tunings</div>
-            <div class="flex flex-wrap gap-2">
-                <Button
-                    v-for="tuning in customTunings"
-                    :key="tuning.id"
-                    variant="secondary"
-                    size="sm"
-                    @click="selectTuning(tuning.id)">
-                    {{ tuning.name }}
-                </Button>
-            </div>
-        </div>
 
         <!-- Add Custom Tuning -->
         <Button variant="secondary" class="w-full h-10" @click="showCustomModal = true">
@@ -94,7 +79,6 @@ interface SelectOption {
 const props = defineProps<{
     tunings: readonly Tuning[];
     currentTuningId: string;
-    customTunings: readonly Tuning[];
 }>();
 
 const emit = defineEmits<{
