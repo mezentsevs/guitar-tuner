@@ -16,55 +16,59 @@
             <!-- Main Content -->
             <div class="grid lg:grid-cols-4 gap-8 justify-center">
                 <!-- Tuning Controls -->
-                <div class="lg:col-span-1 space-y-6">
+                <div class="lg:col-span-1 space-y-6 lg:space-y-0 lg:flex lg:flex-col lg:gap-6">
                     <!-- Tuning Selector -->
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Tuning
                         </h2>
-                        <TuningSelector
-                            :tunings="allTunings"
-                            :current-tuning-id="currentTuning.id"
-                            @select-tuning="selectTuning"
-                            @add-custom-tuning="addCustomTuning" />
+                        <div class="flex-1">
+                            <TuningSelector
+                                :tunings="allTunings"
+                                :current-tuning-id="currentTuning.id"
+                                @select-tuning="selectTuning"
+                                @add-custom-tuning="addCustomTuning" />
+                        </div>
                     </div>
 
                     <!-- Controls -->
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Controls
                         </h2>
-                        <div class="space-y-4">
-                            <Button
-                                :variant="isListening ? 'danger' : 'primary'"
-                                class="w-full h-10"
-                                @click="toggleListening">
-                                <MicrophoneIcon class="w-4 h-4 mr-2" />
-                                {{ isListening ? 'Stop Listening' : 'Start Listening' }}
-                            </Button>
+                        <div class="flex-1 flex items-center">
+                            <div class="space-y-4 w-full">
+                                <Button
+                                    :variant="isListening ? 'danger' : 'primary'"
+                                    class="w-full h-10"
+                                    @click="toggleListening">
+                                    <MicrophoneIcon class="w-4 h-4 mr-2" />
+                                    {{ isListening ? 'Stop Listening' : 'Start Listening' }}
+                                </Button>
 
-                            <Button
-                                variant="secondary"
-                                class="w-full h-10"
-                                @click="playActiveString">
-                                <PlayIcon class="w-4 h-4 mr-2" />
-                                Play Reference
-                            </Button>
+                                <Button
+                                    variant="secondary"
+                                    class="w-full h-10"
+                                    @click="playActiveString">
+                                    <PlayIcon class="w-4 h-4 mr-2" />
+                                    Play Reference
+                                </Button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Frequency Display -->
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Current Input
                         </h2>
-                        <div class="text-center min-h-[84px] flex items-center justify-center">
+                        <div class="flex-1 min-h-[84px] flex items-center justify-center">
                             <div
                                 v-if="currentFrequency > 0"
-                                class="space-y-2 w-full transition-all duration-300 ease-in-out">
+                                class="space-y-2 w-full transition-all duration-300 ease-in-out text-center">
                                 <div class="text-3xl font-bold text-gray-900 dark:text-white">
                                     {{ currentFrequency.toFixed(1) }} Hz
                                 </div>
