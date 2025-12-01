@@ -61,12 +61,23 @@
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Current Input
                         </h2>
-                        <div class="text-center space-y-2">
-                            <div class="text-3xl font-bold text-gray-900 dark:text-white">
-                                {{ currentFrequency > 0 ? currentFrequency.toFixed(1) : '--' }} Hz
+                        <div
+                            class="text-center space-y-3 min-h-[84px] flex flex-col justify-center">
+                            <div
+                                v-if="currentFrequency > 0"
+                                class="space-y-2 transition-all duration-300 ease-in-out">
+                                <div class="text-3xl font-bold text-gray-900 dark:text-white">
+                                    {{ currentFrequency.toFixed(1) }} Hz
+                                </div>
+                                <div class="text-xl text-gray-600 dark:text-gray-400">
+                                    {{ currentNote }}
+                                </div>
                             </div>
-                            <div class="text-xl text-gray-600 dark:text-gray-400">
-                                {{ currentNote || '--' }}
+                            <div
+                                v-else
+                                class="flex flex-col items-center text-gray-400 animate-pulse">
+                                <WaveIcon class="w-10 h-10 mb-2 opacity-60" />
+                                <p class="text-sm">Start tuning to see frequency</p>
                             </div>
                         </div>
                     </div>
