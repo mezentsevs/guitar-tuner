@@ -1,6 +1,6 @@
 <template>
     <div
-        class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-8 lg:py-0 lg:flex lg:items-center px-4 transition-colors duration-300">
+        class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-8 lg:py-8 lg:flex lg:items-center px-4 transition-colors duration-300">
         <div class="max-w-6xl mx-auto w-full">
             <!-- Header -->
             <div class="text-center mb-8 relative">
