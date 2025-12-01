@@ -113,7 +113,6 @@
                                     "
                                     :is-active="activeStringIndex === index"
                                     :is-playing="isPlayingReference && activeStringIndex === index"
-                                    :class="getStringPositionClass(index)"
                                     @select="selectString(index)"
                                     @play="playString(index)" />
                             </div>
@@ -180,27 +179,6 @@ const gridLayoutClass = computed((): string => {
 const containerMinWidthClass = computed((): string => {
     return currentTuning.value.strings.length === 1 ? 'min-w-0' : 'min-w-[336px] sm:min-w-0';
 });
-
-const getStringPositionClass = (index: number): string => {
-    const stringCount = currentTuning.value.strings.length;
-
-    switch (stringCount) {
-        case 5: // 5-string bass: 3+2 layout with right alignment
-            if (index === 3) return 'sm:col-start-2';
-            if (index === 4) return 'sm:col-start-3';
-            break;
-        case 7: // 7-string guitar: 4+3 layout with right alignment
-            if (index === 4) return 'sm:col-start-2';
-            if (index === 5) return 'sm:col-start-3';
-            if (index === 6) return 'sm:col-start-4';
-            break;
-        default:
-            // No special positioning for other string counts
-            break;
-    }
-
-    return '';
-};
 
 const toggleListening = async (): Promise<void> => {
     if (isListening.value) {
