@@ -14,9 +14,10 @@
             </div>
 
             <!-- Main Content -->
-            <div class="grid lg:grid-cols-4 gap-8 justify-center">
+            <div class="grid lg:grid-cols-4 gap-8 justify-center lg:items-stretch">
                 <!-- Tuning Controls -->
-                <div class="lg:col-span-1 space-y-6 lg:space-y-0 lg:flex lg:flex-col lg:gap-6">
+                <div
+                    class="lg:col-span-1 space-y-6 lg:space-y-0 lg:flex lg:flex-col lg:gap-6 lg:h-full">
                     <!-- Tuning Selector -->
                     <div
                         class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300 flex flex-col">
@@ -24,11 +25,13 @@
                             Tuning
                         </h2>
                         <div class="flex-1">
-                            <TuningSelector
-                                :tunings="allTunings"
-                                :current-tuning-id="currentTuning.id"
-                                @select-tuning="selectTuning"
-                                @add-custom-tuning="addCustomTuning" />
+                            <div class="space-y-4 w-full">
+                                <TuningSelector
+                                    :tunings="allTunings"
+                                    :current-tuning-id="currentTuning.id"
+                                    @select-tuning="selectTuning"
+                                    @add-custom-tuning="addCustomTuning" />
+                            </div>
                         </div>
                     </div>
 
@@ -38,7 +41,7 @@
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Controls
                         </h2>
-                        <div class="flex-1 flex items-center">
+                        <div class="flex-1">
                             <div class="space-y-4 w-full">
                                 <Button
                                     :variant="isListening ? 'danger' : 'primary'"
@@ -87,9 +90,9 @@
                 </div>
 
                 <!-- Strings Grid -->
-                <div class="lg:col-span-3">
+                <div class="lg:col-span-3 lg:h-full">
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300 flex flex-col min-h-[500px] w-full">
+                        class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300 flex flex-col min-h-[500px] lg:min-h-0 lg:h-full w-full">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
                             Strings
                         </h2>
