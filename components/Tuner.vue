@@ -26,11 +26,15 @@
                         </h2>
                         <div class="flex-1">
                             <div class="space-y-4 w-full">
-                                <TuningSelector
-                                    :tunings="allTunings"
-                                    :current-tuning-id="currentTuning.id"
-                                    @select-tuning="selectTuning"
-                                    @add-custom-tuning="addCustomTuning" />
+                                <ClientOnly>
+                                    <TuningSelector
+                                        :tunings="allTunings"
+                                        :current-tuning-id="currentTuning.id"
+                                        @select-tuning="selectTuning"
+                                        @add-custom-tuning="addCustomTuning"
+                                        @update-custom-tuning="updateCustomTuning"
+                                        @delete-custom-tuning="deleteCustomTuning" />
+                                </ClientOnly>
                             </div>
                         </div>
                     </div>
@@ -153,22 +157,24 @@ const {
     selectString,
     playActiveString,
     addCustomTuning,
+    updateCustomTuning,
+    deleteCustomTuning,
     selectTuning,
 } = useTuner();
 
 const isPlayingReference = ref<boolean>(false);
 
 const stringGridLayouts: Record<number, string> = {
-    1: 'grid grid-cols-1 gap-4 justify-items-center', // 1 string: monochord
-    2: 'grid grid-cols-2 gap-4', // 2 strings: dichord
-    3: 'grid grid-cols-2 sm:grid-cols-3 gap-4', // 3 strings: balalaika, domra
-    4: 'grid grid-cols-2 sm:grid-cols-4 gap-4', // 4 strings: ukulele, bass, violin
-    5: 'grid grid-cols-2 sm:grid-cols-3 gap-4', // 5 strings: 5-string bass (3+2 layout)
-    6: 'grid grid-cols-2 sm:grid-cols-3 gap-4', // 6 strings: standard guitar
-    7: 'grid grid-cols-2 sm:grid-cols-4 gap-4', // 7 strings: 7-string guitar (4+3 layout)
-    8: 'grid grid-cols-2 sm:grid-cols-4 gap-4', // 8 strings: 8-string guitar, mandolin
-    9: 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4', // 9 strings: theoretical
-    10: 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4', // 10+ strings: theoretical/custom
+    1: 'grid grid-cols-1 gap-4 justify-items-center',
+    2: 'grid grid-cols-2 gap-4',
+    3: 'grid grid-cols-2 sm:grid-cols-3 gap-4',
+    4: 'grid grid-cols-2 sm:grid-cols-4 gap-4',
+    5: 'grid grid-cols-2 sm:grid-cols-3 gap-4',
+    6: 'grid grid-cols-2 sm:grid-cols-3 gap-4',
+    7: 'grid grid-cols-2 sm:grid-cols-4 gap-4',
+    8: 'grid grid-cols-2 sm:grid-cols-4 gap-4',
+    9: 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4',
+    10: 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4',
 };
 
 const gridLayoutClass = computed((): string => {

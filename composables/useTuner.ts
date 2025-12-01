@@ -14,11 +14,14 @@ const SUCCESS_SOUND_COOLDOWN_MS = 1500;
 const SUCCESS_SOUND_DURATION_MS = 300;
 const SUCCESS_SOUND_VOLUME = 0.8;
 
+const CUSTOM_TUNINGS_STORAGE_KEY = 'guitar-tuner-custom-tunings';
+const SELECTED_TUNING_STORAGE_KEY = 'guitar-tuner-selected-tuning';
+
 export function useTuner() {
     const { initialize, getCurrentFrequency, playReferenceNote, isInitialized } = useAudio();
 
-    const currentTuning = ref<Tuning>(PresetTunings[0]!);
     const customTunings = ref<Tuning[]>([]);
+    const currentTuning = ref<Tuning>(PresetTunings[0]!);
     const activeStringIndex = ref<number>(0);
 
     const currentFrequency = ref<number>(0);
@@ -36,29 +39,72 @@ export function useTuner() {
 
     let animationFrameId: number;
 
-    const allTunings = computed((): Tuning[] => [...PresetTunings, ...customTunings.value]);
+    const allTunings = computed((): Tuning[] => {
+        return [...PresetTunings, ...customTunings.value];
+    });
 
-    const activeString = computed(
-        (): Tuning['strings'][0] => currentTuning.value.strings[activeStringIndex.value]!,
-    );
+    const activeString = computed((): Tuning['strings'][0] => {
+        return currentTuning.value.strings[activeStringIndex.value]!;
+    });
 
-    const getBufferSize = computed((): number =>
-        activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ
-            ? LOW_FREQ_BUFFER_SIZE
-            : HIGH_FREQ_BUFFER_SIZE,
-    );
+    const getBufferSize = computed((): number => {
+        if (activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ) {
+            return LOW_FREQ_BUFFER_SIZE;
+        }
+        return HIGH_FREQ_BUFFER_SIZE;
+    });
 
-    const getSuccessThreshold = computed((): number =>
-        activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ
-            ? LOW_FREQ_SUCCESS_THRESHOLD_CENTS
-            : HIGH_FREQ_SUCCESS_THRESHOLD_CENTS,
-    );
+    const getSuccessThreshold = computed((): number => {
+        if (activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ) {
+            return LOW_FREQ_SUCCESS_THRESHOLD_CENTS;
+        }
+        return HIGH_FREQ_SUCCESS_THRESHOLD_CENTS;
+    });
 
-    const getRequiredDuration = computed((): number =>
-        activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ
-            ? LOW_FREQ_STABILITY_DURATION_MS
-            : HIGH_FREQ_STABILITY_DURATION_MS,
-    );
+    const getRequiredDuration = computed((): number => {
+        if (activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ) {
+            return LOW_FREQ_STABILITY_DURATION_MS;
+        }
+        return HIGH_FREQ_STABILITY_DURATION_MS;
+    });
+
+    const loadTunings = (): void => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
+        const storedTunings = localStorage.getItem(CUSTOM_TUNINGS_STORAGE_KEY);
+        if (storedTunings) {
+            try {
+                const parsed = JSON.parse(storedTunings);
+                customTunings.value = Array.isArray(parsed) ? parsed : [];
+            } catch {
+                customTunings.value = [];
+            }
+        }
+
+        const storedSelected = localStorage.getItem(SELECTED_TUNING_STORAGE_KEY);
+        if (storedSelected) {
+            const tuning = allTunings.value.find((t: Tuning) => t.id === storedSelected);
+            if (tuning) {
+                currentTuning.value = tuning;
+            }
+        }
+    };
+
+    const saveCustomTunings = (): void => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+        localStorage.setItem(CUSTOM_TUNINGS_STORAGE_KEY, JSON.stringify(customTunings.value));
+    };
+
+    const saveSelectedTuning = (): void => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+        localStorage.setItem(SELECTED_TUNING_STORAGE_KEY, currentTuning.value.id);
+    };
 
     const startListening = async (): Promise<void> => {
         if (!isInitialized.value) {
@@ -101,7 +147,9 @@ export function useTuner() {
     };
 
     const analyzeAudio = (): void => {
-        if (!isListening.value) return;
+        if (!isListening.value) {
+            return;
+        }
 
         const rawFrequency: number | null = getCurrentFrequency();
 
@@ -195,10 +243,40 @@ export function useTuner() {
     };
 
     const addCustomTuning = (tuning: Tuning): void => {
-        customTunings.value.push({
+        const newTuning: Tuning = {
             ...tuning,
             id: `${TuningPresets.CustomPrefix}${Date.now()}`,
-        });
+        };
+
+        customTunings.value.push(newTuning);
+        saveCustomTunings();
+    };
+
+    const updateCustomTuning = (id: string, updatedTuning: Tuning): void => {
+        const index = customTunings.value.findIndex((tuning: Tuning) => tuning.id === id);
+        if (index !== -1) {
+            customTunings.value[index] = updatedTuning;
+            saveCustomTunings();
+
+            if (currentTuning.value.id === id) {
+                currentTuning.value = updatedTuning;
+                selectString(0);
+            }
+        }
+    };
+
+    const deleteCustomTuning = (id: string): void => {
+        const index = customTunings.value.findIndex((tuning: Tuning) => tuning.id === id);
+        if (index !== -1) {
+            customTunings.value.splice(index, 1);
+            saveCustomTunings();
+
+            if (currentTuning.value.id === id) {
+                currentTuning.value = PresetTunings[0]!;
+                saveSelectedTuning();
+                selectString(0);
+            }
+        }
     };
 
     const selectTuning = (tuningId: string): void => {
@@ -206,9 +284,14 @@ export function useTuner() {
 
         if (tuning) {
             currentTuning.value = tuning;
+            saveSelectedTuning();
             selectString(0);
         }
     };
+
+    onMounted((): void => {
+        loadTunings();
+    });
 
     onUnmounted((): void => {
         stopListening();
@@ -230,6 +313,8 @@ export function useTuner() {
         selectString,
         playActiveString,
         addCustomTuning,
+        updateCustomTuning,
+        deleteCustomTuning,
         selectTuning,
     };
 }
