@@ -45,7 +45,7 @@
                                     class="w-full h-10"
                                     @click="toggleListening">
                                     <MicrophoneIcon class="w-4 h-4 mr-2" />
-                                    {{ isListening ? 'Stop Listening' : 'Start Listening' }}
+                                    {{ isListening ? 'Stop' : 'Start' }}
                                 </Button>
 
                                 <Button
@@ -53,7 +53,7 @@
                                     class="w-full h-10"
                                     @click="playActiveString">
                                     <PlayIcon class="w-4 h-4 mr-2" />
-                                    Play Reference
+                                    Play
                                 </Button>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                     <div
                         class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                            Current Input
+                            Input
                         </h2>
                         <div class="flex-1 min-h-[84px] flex items-center justify-center">
                             <div

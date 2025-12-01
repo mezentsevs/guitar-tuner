@@ -9,7 +9,7 @@
         <!-- Add Custom Tuning -->
         <Button variant="secondary" class="w-full h-10" @click="showCustomModal = true">
             <PlusIcon class="w-4 h-4 mr-2" />
-            Add Custom Tuning
+            Add
         </Button>
 
         <!-- Custom Tuning Modal -->
