@@ -28,24 +28,26 @@
         <Transition name="dropdown">
             <div
                 v-if="isOpen"
-                class="absolute z-50 mt-1 w-full bg-white dark:bg-gray-700 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 max-h-60 overflow-y-auto"
+                class="absolute z-50 mt-1 w-full bg-white dark:bg-gray-700 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600"
                 @click.stop>
-                <div
-                    v-for="option in options"
-                    :key="option.value"
-                    :class="[
-                        'px-3 py-2 cursor-pointer transition-colors flex items-center justify-between',
-                        {
-                            'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400':
-                                isSelected(option.value),
-                            'hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100':
-                                !isSelected(option.value),
-                        },
-                    ]"
-                    @click="selectOption(option)">
-                    <div class="flex-1 truncate">{{ option.label }}</div>
-                    <div v-if="hasActions(option.value)" class="flex items-center gap-1 ml-2">
-                        <slot name="action" :option="option" />
+                <div class="action-select-scroll-container p-1">
+                    <div
+                        v-for="option in options"
+                        :key="option.value"
+                        :class="[
+                            'px-3 py-2 cursor-pointer transition-colors flex items-center justify-between rounded-md',
+                            {
+                                'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400':
+                                    isSelected(option.value),
+                                'hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100':
+                                    !isSelected(option.value),
+                            },
+                        ]"
+                        @click="selectOption(option)">
+                        <div class="flex-1 truncate">{{ option.label }}</div>
+                        <div v-if="hasActions(option.value)" class="flex items-center gap-1 ml-2">
+                            <slot name="action" :option />
+                        </div>
                     </div>
                 </div>
             </div>
