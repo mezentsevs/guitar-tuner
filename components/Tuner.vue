@@ -80,7 +80,7 @@
                                 v-else
                                 class="flex flex-col items-center text-gray-400 animate-pulse space-y-3 w-full">
                                 <WaveIcon class="w-10 h-10 opacity-60 -mt-1" />
-                                <p class="text-sm">Start tuning to see frequency</p>
+                                <p class="text-sm">Start tuning</p>
                             </div>
                         </div>
                     </div>
