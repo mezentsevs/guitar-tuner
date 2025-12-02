@@ -10,7 +10,7 @@
                     isActive && status === DetectionStatus.InTune,
                 'ring-2 ring-red-500 bg-red-50 dark:bg-red-900/20':
                     isActive && status === DetectionStatus.TooHigh,
-                'ring-2 ring-gray-300 bg-gray-50 dark:ring-gray-500 dark:bg-gray-800':
+                'ring-2 ring-gray-300 dark:ring-gray-500 bg-gray-50 dark:bg-gray-800':
                     isActive && status === DetectionStatus.Unstable,
                 'scale-105': isActive && isPlaying,
             },
@@ -18,16 +18,17 @@
         @click="$emit('select')">
         <!-- String Info -->
         <div class="text-center mb-3 w-full">
-            <div class="text-xl font-bold text-gray-900 dark:text-white truncate">
+            <div class="text-xl font-bold text-gray-950 dark:text-white truncate">
                 {{ string.note }}
             </div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 truncate">
+            <div class="text-xs text-gray-700 dark:text-gray-400 truncate">
                 {{ string.frequency.toFixed(2) }} Hz
             </div>
         </div>
 
         <!-- Deviation Indicator -->
-        <div class="w-full h-3 bg-gray-900 rounded-full mb-3 relative overflow-hidden shadow-inner">
+        <div
+            class="w-full h-3 bg-gray-950 dark:bg-gray-900 rounded-full mb-3 relative overflow-hidden shadow-inner">
             <!-- Background Gradient -->
             <div
                 class="absolute inset-0 bg-gradient-to-r from-blue-500 via-green-500 to-red-500 opacity-90" />
@@ -91,7 +92,7 @@ const handlePlayClick = (event: MouseEvent): void => {
 const baseCardClass = computed((): string => {
     return props.isActive
         ? 'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 shadow-lg'
-        : 'bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700 shadow-sm';
+        : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm';
 });
 
 const deviationPosition = computed((): number => {
