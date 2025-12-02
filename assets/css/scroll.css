@@ -1,40 +1,40 @@
-.action-select-scroll-container {
+.custom-scroll-container {
     @apply overflow-y-auto;
     max-height: 15rem;
 }
 
-.action-select-scroll-container::-webkit-scrollbar {
+.custom-scroll-container::-webkit-scrollbar {
     @apply w-2;
 }
 
-.action-select-scroll-container::-webkit-scrollbar-track {
+.custom-scroll-container::-webkit-scrollbar-track {
     @apply bg-transparent rounded;
 }
 
-.action-select-scroll-container::-webkit-scrollbar-thumb {
+.custom-scroll-container::-webkit-scrollbar-thumb {
     background: rgba(156, 163, 175, 0.3);
     @apply rounded;
 }
 
-.action-select-scroll-container::-webkit-scrollbar-thumb:hover {
+.custom-scroll-container::-webkit-scrollbar-thumb:hover {
     background: rgba(156, 163, 175, 0.5);
 }
 
-.dark .action-select-scroll-container::-webkit-scrollbar-thumb {
+.dark .custom-scroll-container::-webkit-scrollbar-thumb {
     background: rgba(75, 85, 99, 0.3);
 }
 
-.dark .action-select-scroll-container::-webkit-scrollbar-thumb:hover {
+.dark .custom-scroll-container::-webkit-scrollbar-thumb:hover {
     background: rgba(75, 85, 99, 0.5);
 }
 
 @supports (scrollbar-width: thin) {
-    .action-select-scroll-container {
+    .custom-scroll-container {
         scrollbar-width: thin;
         scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
     }
 
-    .dark .action-select-scroll-container {
+    .dark .custom-scroll-container {
         scrollbar-color: rgba(75, 85, 99, 0.3) transparent;
     }
 }

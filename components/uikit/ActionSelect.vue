@@ -21,7 +21,7 @@
                 v-if="isOpen"
                 class="absolute z-50 mt-1 w-full bg-white dark:bg-gray-700 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600"
                 @click.stop>
-                <div class="action-select-scroll-container p-1">
+                <div class="custom-scroll-container p-1">
                     <div
                         v-for="option in options"
                         :key="option.value"
