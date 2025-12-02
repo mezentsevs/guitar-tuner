@@ -11,7 +11,7 @@ import {
 export const PresetTunings: Tuning[] = [
     {
         id: TuningId.Standard,
-        name: 'Standard E',
+        name: 'Standard',
         strings: [
             { note: Note.E, frequency: StandardFrequencies.E2 },
             { note: Note.A, frequency: StandardFrequencies.A2 },
@@ -34,15 +34,39 @@ export const PresetTunings: Tuning[] = [
         ],
     },
     {
-        id: TuningId.HalfStepDown,
-        name: '½ Step Down',
+        id: TuningId.DADGAD,
+        name: 'DADGAD',
         strings: [
-            { note: Note.DSharp, frequency: StandardFrequencies.DSharp2 },
-            { note: Note.GSharp, frequency: StandardFrequencies.GSharp2 },
-            { note: Note.CSharp, frequency: StandardFrequencies.CSharp3 },
+            { note: Note.D, frequency: StandardFrequencies.D2 },
+            { note: Note.A, frequency: StandardFrequencies.A2 },
+            { note: Note.D, frequency: StandardFrequencies.D3 },
+            { note: Note.G, frequency: StandardFrequencies.G3 },
+            { note: Note.A, frequency: StandardFrequencies.A3 },
+            { note: Note.D, frequency: StandardFrequencies.D4 },
+        ],
+    },
+    {
+        id: TuningId.OpenG,
+        name: 'Open G',
+        strings: [
+            { note: Note.D, frequency: StandardFrequencies.D2 },
+            { note: Note.G, frequency: StandardFrequencies.G2 },
+            { note: Note.D, frequency: StandardFrequencies.D3 },
+            { note: Note.G, frequency: StandardFrequencies.G3 },
+            { note: Note.B, frequency: StandardFrequencies.B3 },
+            { note: Note.D, frequency: StandardFrequencies.D4 },
+        ],
+    },
+    {
+        id: TuningId.OpenD,
+        name: 'Open D',
+        strings: [
+            { note: Note.D, frequency: StandardFrequencies.D2 },
+            { note: Note.A, frequency: StandardFrequencies.A2 },
+            { note: Note.D, frequency: StandardFrequencies.D3 },
             { note: Note.FSharp, frequency: StandardFrequencies.FSharp3 },
-            { note: Note.ASharp, frequency: StandardFrequencies.ASharp3 },
-            { note: Note.DSharp, frequency: StandardFrequencies.DSharp4 },
+            { note: Note.A, frequency: StandardFrequencies.A3 },
+            { note: Note.D, frequency: StandardFrequencies.D4 },
         ],
     },
     {
@@ -58,15 +82,135 @@ export const PresetTunings: Tuning[] = [
         ],
     },
     {
-        id: TuningId.OpenG,
-        name: 'Open G',
+        id: TuningId.HalfStepDown,
+        name: '½ Step Down',
         strings: [
+            { note: Note.EFlat, frequency: StandardFrequencies.Eb2 },
+            { note: Note.AFlat, frequency: StandardFrequencies.Ab2 },
+            { note: Note.DFlat, frequency: StandardFrequencies.Db3 },
+            { note: Note.GFlat, frequency: StandardFrequencies.Gb3 },
+            { note: Note.BFlat, frequency: StandardFrequencies.Bb3 },
+            { note: Note.EFlat, frequency: StandardFrequencies.Eb4 },
+        ],
+    },
+    {
+        id: TuningId.OpenC,
+        name: 'Open C',
+        strings: [
+            { note: Note.C, frequency: StandardFrequencies.C2 },
+            { note: Note.G, frequency: StandardFrequencies.G2 },
+            { note: Note.C, frequency: StandardFrequencies.C3 },
+            { note: Note.G, frequency: StandardFrequencies.G3 },
+            { note: Note.C, frequency: StandardFrequencies.C4 },
+            { note: Note.E, frequency: StandardFrequencies.E4 },
+        ],
+    },
+    {
+        id: TuningId.Bass4,
+        name: 'Bass (4)',
+        strings: [
+            { note: Note.E, frequency: StandardFrequencies.E1 },
+            { note: Note.A, frequency: StandardFrequencies.A1 },
             { note: Note.D, frequency: StandardFrequencies.D2 },
             { note: Note.G, frequency: StandardFrequencies.G2 },
+        ],
+    },
+    {
+        id: TuningId.Bass5,
+        name: 'Bass (5)',
+        strings: [
+            { note: Note.B, frequency: StandardFrequencies.B0 },
+            { note: Note.E, frequency: StandardFrequencies.E1 },
+            { note: Note.A, frequency: StandardFrequencies.A1 },
+            { note: Note.D, frequency: StandardFrequencies.D2 },
+            { note: Note.G, frequency: StandardFrequencies.G2 },
+        ],
+    },
+    {
+        id: TuningId.UkuleleSoprano,
+        name: 'Ukulele (S)',
+        strings: [
+            { note: Note.G, frequency: StandardFrequencies.G4 },
+            { note: Note.C, frequency: StandardFrequencies.C4 },
+            { note: Note.E, frequency: StandardFrequencies.E4 },
+            { note: Note.A, frequency: StandardFrequencies.A4 },
+        ],
+    },
+    {
+        id: TuningId.UkuleleConcert,
+        name: 'Ukulele (C)',
+        strings: [
+            { note: Note.G, frequency: StandardFrequencies.G4 },
+            { note: Note.C, frequency: StandardFrequencies.C4 },
+            { note: Note.E, frequency: StandardFrequencies.E4 },
+            { note: Note.A, frequency: StandardFrequencies.A4 },
+        ],
+    },
+    {
+        id: TuningId.UkuleleTenor,
+        name: 'Ukulele (T)',
+        strings: [
+            { note: Note.G, frequency: StandardFrequencies.G3 },
+            { note: Note.C, frequency: StandardFrequencies.C4 },
+            { note: Note.E, frequency: StandardFrequencies.E4 },
+            { note: Note.A, frequency: StandardFrequencies.A4 },
+        ],
+    },
+    {
+        id: TuningId.UkuleleBaritone,
+        name: 'Ukulele (B)',
+        strings: [
             { note: Note.D, frequency: StandardFrequencies.D3 },
             { note: Note.G, frequency: StandardFrequencies.G3 },
             { note: Note.B, frequency: StandardFrequencies.B3 },
-            { note: Note.D, frequency: StandardFrequencies.D4 },
+            { note: Note.E, frequency: StandardFrequencies.E4 },
+        ],
+    },
+    {
+        id: TuningId.Balalaika,
+        name: 'Balalaika',
+        strings: [
+            { note: Note.E, frequency: StandardFrequencies.E4 },
+            { note: Note.E, frequency: StandardFrequencies.E4 },
+            { note: Note.A, frequency: StandardFrequencies.A4 },
+        ],
+    },
+    {
+        id: TuningId.Domra,
+        name: 'Domra',
+        strings: [
+            { note: Note.E, frequency: StandardFrequencies.E4 },
+            { note: Note.A, frequency: StandardFrequencies.A4 },
+            { note: Note.D, frequency: StandardFrequencies.D5 },
+        ],
+    },
+    {
+        id: TuningId.Shamisen,
+        name: 'Shamisen',
+        strings: [
+            { note: Note.B, frequency: StandardFrequencies.B3 },
+            { note: Note.E, frequency: StandardFrequencies.E4 },
+            { note: Note.B, frequency: StandardFrequencies.B4 },
+        ],
+    },
+    {
+        id: TuningId.Oud,
+        name: 'Oud',
+        strings: [
+            { note: Note.C, frequency: StandardFrequencies.C2 },
+            { note: Note.F, frequency: StandardFrequencies.F2 },
+            { note: Note.A, frequency: StandardFrequencies.A2 },
+            { note: Note.D, frequency: StandardFrequencies.D3 },
+            { note: Note.G, frequency: StandardFrequencies.G3 },
+        ],
+    },
+    {
+        id: TuningId.Sitar,
+        name: 'Sitar',
+        strings: [
+            { note: Note.C, frequency: StandardFrequencies.C2 },
+            { note: Note.G, frequency: StandardFrequencies.G2 },
+            { note: Note.C, frequency: StandardFrequencies.C3 },
         ],
     },
 ];

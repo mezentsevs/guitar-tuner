@@ -77,7 +77,7 @@
                                 v-if="currentFrequency > 0"
                                 class="space-y-2 w-full transition-all duration-300 ease-in-out text-center -mt-4">
                                 <div class="text-3xl font-bold text-gray-900 dark:text-white">
-                                    {{ currentFrequency.toFixed(1) }} Hz
+                                    {{ currentFrequency.toFixed(2) }} Hz
                                 </div>
                                 <div class="text-xl text-gray-600 dark:text-gray-400">
                                     {{ currentNote }}

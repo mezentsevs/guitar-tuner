@@ -1,6 +1,5 @@
 <template>
     <div class="space-y-4">
-        <!-- Custom Select with Actions -->
         <ActionSelect
             :model-value="currentTuningId"
             :options="tuningOptions"
@@ -22,13 +21,11 @@
             </template>
         </ActionSelect>
 
-        <!-- Add Custom Tuning -->
         <Button variant="secondary" class="w-full h-10" @click="showAddModal = true">
             <PlusIcon class="w-4 h-4 mr-2" />
             Add
         </Button>
 
-        <!-- Add/Edit Custom Tuning Modal -->
         <Modal :is-open="showModal" @close="closeModal">
             <template #title>{{ modalMode === 'add' ? 'Add' : 'Edit' }} Custom Tuning</template>
 
@@ -59,7 +56,8 @@
                             v-model.number="string.frequency"
                             type="number"
                             step="0.01"
-                            min="1"
+                            :min="frequencyMin"
+                            :max="frequencyMax"
                             class="flex-1 px-2 py-1 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-colors duration-200"
                             placeholder="Frequency" />
                         <Button
@@ -83,7 +81,6 @@
             </template>
         </Modal>
 
-        <!-- Delete Confirmation Modal -->
         <Modal :is-open="showDeleteModal" @close="showDeleteModal = false">
             <template #title>Delete Tuning</template>
 
@@ -105,6 +102,7 @@
 </template>
 
 <script setup lang="ts">
+import { FrequencyConstants } from '@/types/tuner';
 import { Note, NoteNames, TuningPresets, type Tuning, type GuitarString } from '@/types/tuner';
 
 interface SelectOption {
@@ -146,6 +144,9 @@ const modalMode = ref<'add' | 'edit'>('add');
 const editingTuning = ref<Tuning>(createEmptyTuning());
 const deletingTuning = ref<Tuning | null>(null);
 
+const frequencyMin = FrequencyConstants.MinDetection;
+const frequencyMax = FrequencyConstants.MaxDetection;
+
 const tuningOptions = computed((): SelectOption[] => {
     return props.tunings.map((tuning: Tuning) => ({
         value: tuning.id,
@@ -173,7 +174,7 @@ const isValidTuning = computed((): boolean => {
         editingTuning.value.name.trim() !== '' &&
         editingTuning.value.strings.length > 0 &&
         editingTuning.value.strings.every((s: GuitarString) => {
-            return s.note && s.frequency > 0;
+            return s.note && s.frequency >= frequencyMin && s.frequency <= frequencyMax;
         })
     );
 });
