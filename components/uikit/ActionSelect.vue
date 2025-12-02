@@ -10,18 +10,9 @@
             @click="toggleDropdown"
             @keydown.escape="closeDropdown">
             <span class="truncate">{{ selectedLabel }}</span>
-            <svg
+            <ChevronDownIcon
                 class="w-5 h-5 text-gray-400 transition-transform duration-200"
-                :class="{ 'rotate-180': isOpen }"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7" />
-            </svg>
+                :class="{ 'rotate-180': isOpen }" />
         </button>
 
         <!-- Dropdown Options -->
