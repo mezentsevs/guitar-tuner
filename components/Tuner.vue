@@ -72,10 +72,10 @@
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Input
                         </h2>
-                        <div class="flex-1 min-h-[84px] flex items-center justify-center">
+                        <div class="flex-1 flex items-center justify-center">
                             <div
                                 v-if="currentFrequency > 0"
-                                class="space-y-2 w-full transition-all duration-300 ease-in-out text-center">
+                                class="space-y-2 w-full transition-all duration-300 ease-in-out text-center -mt-4">
                                 <div class="text-3xl font-bold text-gray-900 dark:text-white">
                                     {{ currentFrequency.toFixed(1) }} Hz
                                 </div>
@@ -85,8 +85,8 @@
                             </div>
                             <div
                                 v-else
-                                class="flex flex-col items-center text-gray-400 animate-pulse space-y-3 w-full">
-                                <WaveIcon class="w-10 h-10 opacity-60 -mt-1" />
+                                class="flex flex-col items-center text-gray-400 animate-pulse space-y-3 w-full -mt-4">
+                                <WaveIcon class="w-10 h-10 opacity-60" />
                                 <p class="text-sm">Start tuning</p>
                             </div>
                         </div>
