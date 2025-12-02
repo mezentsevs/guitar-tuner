@@ -97,6 +97,9 @@ export class AudioProcessor {
 export class ReferenceAudio {
     private audioContext: AudioContext | null = null;
 
+    private static readonly LOW_FREQUENCY_THRESHOLD = 100;
+    private static readonly OCTAVE_MULTIPLIER = 4;
+
     playFrequency(
         frequency: number,
         duration: number = AudioSettings.ReferenceNoteDuration,
@@ -112,7 +115,12 @@ export class ReferenceAudio {
         oscillator.connect(gainNode);
         gainNode.connect(this.audioContext.destination);
 
-        oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+        const playbackFrequency =
+            frequency < ReferenceAudio.LOW_FREQUENCY_THRESHOLD
+                ? frequency * ReferenceAudio.OCTAVE_MULTIPLIER
+                : frequency;
+
+        oscillator.frequency.setValueAtTime(playbackFrequency, this.audioContext.currentTime);
         oscillator.type = AudioSettings.OscillatorType;
 
         gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
