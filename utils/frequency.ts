@@ -3,7 +3,6 @@ import {
     DetectionThresholds,
     FrequencyConstants,
     Note,
-    NoteNames,
     StandardFrequencies,
     TuningId,
     type Tuning,
@@ -76,7 +75,21 @@ export function frequencyToNote(frequency: number): { note: Note; cents: number 
     const C0: number = FrequencyConstants.C0;
     const h: number = Math.round(12 * Math.log2(frequency / C0));
     const noteIndex: number = h % 12;
-    const note: Note = NoteNames[noteIndex]!;
+    const baseNotes: Note[] = [
+        Note.C,
+        Note.CSharp,
+        Note.D,
+        Note.DSharp,
+        Note.E,
+        Note.F,
+        Note.FSharp,
+        Note.G,
+        Note.GSharp,
+        Note.A,
+        Note.ASharp,
+        Note.B,
+    ];
+    const note: Note = baseNotes[noteIndex]!;
 
     const exactFrequency: number = C0 * Math.pow(2, h / 12);
     const cents: number = Math.round(1200 * Math.log2(frequency / exactFrequency));

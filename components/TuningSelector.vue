@@ -153,16 +153,16 @@ const tuningOptions = computed((): SelectOption[] => {
     }));
 });
 
-const isCustomTuning = (id: string): boolean => {
-    return id.startsWith(TuningPresets.CustomPrefix);
-};
-
 const noteOptions = computed((): SelectOption[] => {
     return NoteNames.map((note: Note) => ({
         value: note,
         label: note,
     }));
 });
+
+const isCustomTuning = (id: string): boolean => {
+    return id.startsWith(TuningPresets.CustomPrefix);
+};
 
 const showModal = computed((): boolean => {
     return showAddModal.value || modalMode.value === 'edit';
