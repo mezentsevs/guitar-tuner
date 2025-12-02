@@ -53,8 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import ChevronDownIcon from '@/components/icons/ChevronDownIcon.vue';
-
 interface SelectOption {
     value: string;
     label: string;
