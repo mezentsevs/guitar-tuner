@@ -50,6 +50,7 @@
                                 <Button
                                     :variant="isListening ? 'danger' : 'primary'"
                                     class="w-full h-10"
+                                    :class="{ 'animate-pulse': isListening }"
                                     @click="toggleListening">
                                     <MicrophoneIcon class="w-4 h-4 mr-2" />
                                     {{ isListening ? 'Stop' : 'Start' }}
