@@ -2,7 +2,9 @@
     <div ref="containerRef" class="relative">
         <!-- Selected Value Display -->
         <button
+            :id
             type="button"
+            :name
             :class="[
                 'w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-left flex justify-between items-center',
                 disabled
@@ -63,9 +65,13 @@ const props = withDefaults(
         modelValue: string;
         options: SelectOption[];
         disabled?: boolean;
+        id?: string;
+        name?: string;
     }>(),
     {
         disabled: false,
+        id: undefined,
+        name: undefined,
     },
 );
 

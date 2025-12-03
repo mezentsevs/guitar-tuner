@@ -1,25 +1,30 @@
 <template>
     <div class="space-y-4">
-        <ActionSelect
-            :model-value="currentTuningId"
-            :options="tuningOptions"
-            :has-actions="isCustomTuning"
-            @update:model-value="selectTuning">
-            <template #action="{ option }">
-                <button
-                    class="p-1 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 rounded transition-colors"
-                    aria-label="Edit tuning"
-                    @click.stop="editTuningFromOption(option.value)">
-                    <EditIcon class="w-4 h-4" />
-                </button>
-                <button
-                    class="p-1 text-gray-400 hover:text-red-600 dark:hover:text-red-400 rounded transition-colors"
-                    aria-label="Delete tuning"
-                    @click.stop="confirmDeleteTuningFromOption(option.value)">
-                    <DeleteIcon class="w-4 h-4" />
-                </button>
-            </template>
-        </ActionSelect>
+        <div>
+            <label for="tuning-selector" class="sr-only">Select tuning</label>
+            <ActionSelect
+                id="tuning-selector"
+                name="tuning-selector"
+                :model-value="currentTuningId"
+                :options="tuningOptions"
+                :has-actions="isCustomTuning"
+                @update:model-value="selectTuning">
+                <template #action="{ option }">
+                    <button
+                        class="p-1 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 rounded transition-colors"
+                        aria-label="Edit tuning"
+                        @click.stop="editTuningFromOption(option.value)">
+                        <EditIcon class="w-4 h-4" />
+                    </button>
+                    <button
+                        class="p-1 text-gray-400 hover:text-red-600 dark:hover:text-red-400 rounded transition-colors"
+                        aria-label="Delete tuning"
+                        @click.stop="confirmDeleteTuningFromOption(option.value)">
+                        <DeleteIcon class="w-4 h-4" />
+                    </button>
+                </template>
+            </ActionSelect>
+        </div>
 
         <Button variant="secondary" class="w-full h-10" @click="showAddModal = true">
             <PlusIcon class="w-4 h-4 mr-2" />
@@ -31,12 +36,16 @@
 
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label
+                        for="tuning-name-input"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Tuning Name
                     </label>
                     <input
+                        id="tuning-name-input"
                         v-model="editingTuning.name"
                         type="text"
+                        name="tuning-name"
                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-colors duration-200"
                         placeholder="e.g., Open G" />
                 </div>
@@ -47,19 +56,32 @@
                         v-for="(string, index) in editingTuning.strings"
                         :key="index"
                         class="flex gap-2 items-center">
-                        <SimpleSelect
-                            :model-value="string.note"
-                            :options="noteOptions"
-                            class="w-20"
-                            @update:model-value="updateStringNote(index, $event)" />
-                        <input
-                            v-model.number="string.frequency"
-                            type="number"
-                            step="0.01"
-                            :min="frequencyMin"
-                            :max="frequencyMax"
-                            class="flex-1 px-2 py-1 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-colors duration-200"
-                            placeholder="Frequency" />
+                        <div class="w-20">
+                            <label :for="`string-note-${index}`" class="sr-only">
+                                Note for string {{ index + 1 }}
+                            </label>
+                            <SimpleSelect
+                                :id="`string-note-${index}`"
+                                :name="`string-note-${index}`"
+                                :model-value="string.note"
+                                :options="noteOptions"
+                                @update:model-value="updateStringNote(index, $event)" />
+                        </div>
+                        <div class="flex-1">
+                            <label :for="`string-frequency-${index}`" class="sr-only">
+                                Frequency for string {{ index + 1 }}
+                            </label>
+                            <input
+                                :id="`string-frequency-${index}`"
+                                v-model.number="string.frequency"
+                                :name="`string-frequency-${index}`"
+                                type="number"
+                                step="0.01"
+                                :min="frequencyMin"
+                                :max="frequencyMax"
+                                class="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-colors duration-200"
+                                placeholder="Frequency" />
+                        </div>
                         <Button
                             v-if="editingTuning.strings.length > 1"
                             variant="danger"
