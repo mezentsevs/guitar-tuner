@@ -3,8 +3,10 @@ export function useTheme() {
 
     const setTheme = (newTheme: 'light' | 'dark'): void => {
         theme.value = newTheme;
+
         if (typeof window !== 'undefined') {
             localStorage.setItem('theme', newTheme);
+
             if (newTheme === 'dark') {
                 document.documentElement.classList.add('dark');
             } else {

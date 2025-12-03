@@ -242,8 +242,14 @@ export function frequencyToNote(frequency: number): { note: Note; cents: number 
 }
 
 export function getDetectionStatus(cents: number): DetectionStatus {
-    if (cents < DetectionThresholds.InTuneLow) return DetectionStatus.TooLow;
-    if (cents > DetectionThresholds.InTuneHigh) return DetectionStatus.TooHigh;
+    if (cents < DetectionThresholds.InTuneLow) {
+        return DetectionStatus.TooLow;
+    }
+
+    if (cents > DetectionThresholds.InTuneHigh) {
+        return DetectionStatus.TooHigh;
+    }
+
     return DetectionStatus.InTune;
 }
 

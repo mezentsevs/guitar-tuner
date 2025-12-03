@@ -23,7 +23,9 @@ export class AudioProcessor {
     }
 
     getFrequency(): number | null {
-        if (!this.analyser || !this.dataArray) return null;
+        if (!this.analyser || !this.dataArray) {
+            return null;
+        }
 
         // Using any is justified here due to TypeScript and Web Audio API type incompatibility
         // Web Audio API expects Float32Array<ArrayBuffer> but TypeScript's DOM types
@@ -34,6 +36,7 @@ export class AudioProcessor {
         this.analyser.getFloatTimeDomainData(this.dataArray as any);
 
         const sampleRate: number = this.audioContext?.sampleRate || 44100;
+
         return this.autoCorrelate(this.dataArray, sampleRate);
     }
 
@@ -66,11 +69,13 @@ export class AudioProcessor {
             }
 
             correlation = 1 - correlation / maxSamples;
+
             if (
                 correlation > FrequencyConstants.GoodCorrelationThreshold &&
                 correlation > lastCorrelation
             ) {
                 foundGoodCorrelation = true;
+
                 if (correlation > bestCorrelation) {
                     bestCorrelation = correlation;
                     bestOffset = offset;
@@ -78,6 +83,7 @@ export class AudioProcessor {
             } else if (foundGoodCorrelation) {
                 break;
             }
+
             lastCorrelation = correlation;
         }
 

@@ -180,6 +180,7 @@ const stringGridLayouts: Record<number, string> = {
 
 const gridLayoutClass = computed((): string => {
     const stringCount = currentTuning.value.strings.length;
+
     return stringGridLayouts[stringCount] || stringGridLayouts[10]!;
 });
 
@@ -203,6 +204,7 @@ const playString = (index: number): void => {
     selectString(index);
     playActiveString();
     isPlayingReference.value = true;
+
     setTimeout((): void => {
         isPlayingReference.value = false;
     }, 1000);

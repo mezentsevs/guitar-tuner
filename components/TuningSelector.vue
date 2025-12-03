@@ -207,6 +207,7 @@ const selectTuning = (id: string): void => {
 
 const editTuningFromOption = (tuningId: string): void => {
     const tuning = props.tunings.find((t: Tuning) => t.id === tuningId);
+
     if (tuning) {
         editTuning(tuning);
     }
@@ -224,6 +225,7 @@ const editTuning = (tuning: Tuning): void => {
 
 const confirmDeleteTuningFromOption = (tuningId: string): void => {
     const tuning = props.tunings.find((t: Tuning) => t.id === tuningId);
+
     if (tuning) {
         confirmDeleteTuning(tuning);
     }

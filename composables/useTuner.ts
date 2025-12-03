@@ -51,6 +51,7 @@ export function useTuner() {
         if (activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ) {
             return LOW_FREQ_BUFFER_SIZE;
         }
+
         return HIGH_FREQ_BUFFER_SIZE;
     });
 
@@ -58,6 +59,7 @@ export function useTuner() {
         if (activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ) {
             return LOW_FREQ_SUCCESS_THRESHOLD_CENTS;
         }
+
         return HIGH_FREQ_SUCCESS_THRESHOLD_CENTS;
     });
 
@@ -65,6 +67,7 @@ export function useTuner() {
         if (activeString.value.frequency < LOW_FREQUENCY_THRESHOLD_HZ) {
             return LOW_FREQ_STABILITY_DURATION_MS;
         }
+
         return HIGH_FREQ_STABILITY_DURATION_MS;
     });
 
@@ -74,6 +77,7 @@ export function useTuner() {
         }
 
         const storedTunings = localStorage.getItem(CUSTOM_TUNINGS_STORAGE_KEY);
+
         if (storedTunings) {
             try {
                 const parsed = JSON.parse(storedTunings);
@@ -84,8 +88,10 @@ export function useTuner() {
         }
 
         const storedSelected = localStorage.getItem(SELECTED_TUNING_STORAGE_KEY);
+
         if (storedSelected) {
             const tuning = allTunings.value.find((t: Tuning) => t.id === storedSelected);
+
             if (tuning) {
                 currentTuning.value = tuning;
             }
@@ -96,6 +102,7 @@ export function useTuner() {
         if (typeof window === 'undefined') {
             return;
         }
+
         localStorage.setItem(CUSTOM_TUNINGS_STORAGE_KEY, JSON.stringify(customTunings.value));
     };
 
@@ -103,6 +110,7 @@ export function useTuner() {
         if (typeof window === 'undefined') {
             return;
         }
+
         localStorage.setItem(SELECTED_TUNING_STORAGE_KEY, currentTuning.value.id);
     };
 
@@ -254,6 +262,7 @@ export function useTuner() {
 
     const updateCustomTuning = (id: string, updatedTuning: Tuning): void => {
         const index = customTunings.value.findIndex((tuning: Tuning) => tuning.id === id);
+
         if (index !== -1) {
             customTunings.value[index] = updatedTuning;
             saveCustomTunings();
@@ -267,6 +276,7 @@ export function useTuner() {
 
     const deleteCustomTuning = (id: string): void => {
         const index = customTunings.value.findIndex((tuning: Tuning) => tuning.id === id);
+
         if (index !== -1) {
             customTunings.value.splice(index, 1);
             saveCustomTunings();

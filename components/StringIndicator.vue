@@ -97,6 +97,7 @@ const baseCardClass = computed((): string => {
 
 const deviationPosition = computed((): number => {
     const clamped: number = Math.max(-50, Math.min(50, props.deviation));
+
     return ((clamped + 50) / 100) * 100;
 });
 

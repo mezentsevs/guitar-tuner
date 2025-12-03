@@ -86,6 +86,7 @@ const selectedLabel = computed((): string => {
     const selected = props.options.find(
         (option: SelectOption) => option.value === props.modelValue,
     );
+
     return selected?.label || '';
 });
 
