@@ -20,7 +20,7 @@
                     class="lg:col-span-1 space-y-6 lg:space-y-0 lg:flex lg:flex-col lg:gap-6 lg:h-full">
                     <!-- Tuning Selector -->
                     <div
-                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
+                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Tuning
                         </h2>
@@ -41,7 +41,7 @@
 
                     <!-- Controls -->
                     <div
-                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
+                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Controls
                         </h2>
@@ -68,7 +68,7 @@
 
                     <!-- Frequency Display -->
                     <div
-                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
+                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Input
                         </h2>
@@ -96,7 +96,7 @@
                 <!-- Strings Grid -->
                 <div class="lg:col-span-3 lg:h-full">
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col min-h-[500px] lg:min-h-0 lg:h-full w-full">
+                        class="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col min-h-[500px] lg:min-h-0 lg:h-full w-full">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
                             Strings
                         </h2>
