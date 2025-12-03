@@ -1,13 +1,13 @@
 <template>
     <div
-        class="min-h-screen bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 py-8 lg:py-8 lg:flex lg:items-center px-4 transition-colors duration-300">
+        class="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 py-8 lg:py-8 lg:flex lg:items-center px-4 transition-colors duration-300">
         <div class="max-w-6xl mx-auto w-full">
             <!-- Header -->
             <div class="text-center mb-8 relative">
                 <div class="absolute top-0 right-0">
                     <ThemeToggle />
                 </div>
-                <h1 class="text-4xl font-bold text-gray-950 dark:text-white mb-2">Guitar Tuner</h1>
+                <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Guitar Tuner</h1>
                 <p class="text-gray-700 dark:text-gray-400">
                     Professional tuning with real-time audio analysis
                 </p>
@@ -20,8 +20,8 @@
                     class="lg:col-span-1 space-y-6 lg:space-y-0 lg:flex lg:flex-col lg:gap-6 lg:h-full">
                     <!-- Tuning Selector -->
                     <div
-                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm p-6 transition-colors duration-300 flex flex-col border-t border-gray-100 dark:border-t-0 dark:border-gray-600">
-                        <h2 class="text-lg font-semibold text-gray-950 dark:text-white mb-4">
+                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Tuning
                         </h2>
                         <div class="flex-1">
@@ -41,8 +41,8 @@
 
                     <!-- Controls -->
                     <div
-                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm p-6 transition-colors duration-300 flex flex-col border-t border-gray-100 dark:border-t-0 dark:border-gray-600">
-                        <h2 class="text-lg font-semibold text-gray-950 dark:text-white mb-4">
+                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Controls
                         </h2>
                         <div class="flex-1">
@@ -68,15 +68,15 @@
 
                     <!-- Frequency Display -->
                     <div
-                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm p-6 transition-colors duration-300 flex flex-col border-t border-gray-100 dark:border-t-0 dark:border-gray-600">
-                        <h2 class="text-lg font-semibold text-gray-950 dark:text-white mb-4">
+                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Input
                         </h2>
                         <div class="flex-1 flex items-center justify-center">
                             <div
                                 v-if="currentFrequency > 0"
                                 class="space-y-2 w-full transition-all duration-300 ease-in-out text-center -mt-4">
-                                <div class="text-3xl font-bold text-gray-950 dark:text-white">
+                                <div class="text-3xl font-bold text-gray-900 dark:text-white">
                                     {{ currentFrequency.toFixed(2) }} Hz
                                 </div>
                                 <div class="text-xl text-gray-700 dark:text-gray-400">
@@ -96,8 +96,8 @@
                 <!-- Strings Grid -->
                 <div class="lg:col-span-3 lg:h-full">
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm p-6 transition-colors duration-300 flex flex-col min-h-[500px] lg:min-h-0 lg:h-full w-full border-t border-gray-100 dark:border-t-0 dark:border-gray-600">
-                        <h2 class="text-lg font-semibold text-gray-950 dark:text-white mb-6">
+                        class="bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col min-h-[500px] lg:min-h-0 lg:h-full w-full">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
                             Strings
                         </h2>
 
