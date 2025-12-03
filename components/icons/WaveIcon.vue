@@ -1,5 +1,10 @@
 <template>
-    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        viewBox="0 0 24 24">
         <line x1="3" y1="10" x2="3" y2="14" />
         <line x1="5.5" y1="7" x2="5.5" y2="17" />
         <line x1="8" y1="4" x2="8" y2="20" />
