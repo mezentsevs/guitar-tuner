@@ -216,6 +216,10 @@ export const PresetTunings: Tuning[] = [
 ];
 
 export function frequencyToNote(frequency: number): { note: Note; cents: number } {
+    if (!Number.isFinite(frequency) || frequency <= 0) {
+        return { note: Note.C, cents: 0 };
+    }
+
     const C0: number = FrequencyConstants.C0;
     const h: number = Math.round(12 * Math.log2(frequency / C0));
     const noteIndex: number = h % 12;
@@ -236,12 +240,22 @@ export function frequencyToNote(frequency: number): { note: Note; cents: number 
     const note: Note = baseNotes[noteIndex]!;
 
     const exactFrequency: number = C0 * Math.pow(2, h / 12);
-    const cents: number = Math.round(1200 * Math.log2(frequency / exactFrequency));
+    const ratio: number = frequency / exactFrequency;
 
-    return { note, cents };
+    if (!Number.isFinite(ratio) || ratio <= 0) {
+        return { note, cents: 0 };
+    }
+
+    const cents: number = Math.round(1200 * Math.log2(ratio));
+
+    return { note, cents: Number.isFinite(cents) ? cents : 0 };
 }
 
 export function getDetectionStatus(cents: number): DetectionStatus {
+    if (!Number.isFinite(cents)) {
+        return DetectionStatus.Unstable;
+    }
+
     if (cents < DetectionThresholds.InTuneLow) {
         return DetectionStatus.TooLow;
     }
@@ -254,5 +268,9 @@ export function getDetectionStatus(cents: number): DetectionStatus {
 }
 
 export function centsToPercentage(cents: number): number {
+    if (!Number.isFinite(cents)) {
+        return 50;
+    }
+
     return Math.min(100, Math.max(0, (cents + DetectionThresholds.CentRange) * 2));
 }

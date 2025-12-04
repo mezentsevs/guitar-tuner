@@ -4,8 +4,8 @@ import { PresetTunings, frequencyToNote, getDetectionStatus } from '@/utils/freq
 import { type Tuning, TuningPresets, FrequencyConstants, DetectionStatus } from '@/types/tuner';
 
 const LOW_FREQUENCY_THRESHOLD_HZ = 100;
-const LOW_FREQ_BUFFER_SIZE = 15;
-const HIGH_FREQ_BUFFER_SIZE = 12;
+const LOW_FREQ_BUFFER_SIZE = 9;
+const HIGH_FREQ_BUFFER_SIZE = 7;
 const LOW_FREQ_SUCCESS_THRESHOLD_CENTS = 22;
 const HIGH_FREQ_SUCCESS_THRESHOLD_CENTS = 20;
 const LOW_FREQ_STABILITY_DURATION_MS = 700;
@@ -136,22 +136,71 @@ export function useTuner() {
     };
 
     const smoothValue = (buffer: number[], newValue: number): number => {
+        if (!Number.isFinite(newValue)) {
+            if (buffer.length > 0) {
+                const lastValid: number = buffer[buffer.length - 1]!;
+                return Number.isFinite(lastValid) ? lastValid : 0;
+            }
+            return 0;
+        }
+
         buffer.push(newValue);
 
         if (buffer.length > getBufferSize.value) {
             buffer.shift();
         }
 
-        let sum = 0;
-        let weightSum = 0;
-
-        for (let i = 0; i < buffer.length; i++) {
-            const weight = (i + 1) / buffer.length;
-            sum += buffer[i]! * weight;
-            weightSum += weight;
+        if (buffer.length < 2) {
+            return newValue;
         }
 
-        return sum / weightSum;
+        const validBuffer: number[] = buffer.filter(val => Number.isFinite(val));
+        if (validBuffer.length === 0) {
+            return 0;
+        }
+
+        if (validBuffer.length === 1) {
+            return validBuffer[0]!;
+        }
+
+        const sorted: number[] = [...validBuffer].sort((a, b) => a - b);
+        const mid: number = Math.floor(sorted.length / 2);
+        const median: number =
+            sorted.length % 2 === 0 ? (sorted[mid - 1]! + sorted[mid]!) / 2 : sorted[mid]!;
+
+        if (!Number.isFinite(median)) {
+            return validBuffer[validBuffer.length - 1]!;
+        }
+
+        const tolerance: number = median < 100 ? 0.25 : 0.15;
+        const tightValues: number[] = validBuffer.filter(
+            val => Math.abs(val - median) < Math.max(median * tolerance, 15),
+        );
+
+        if (tightValues.length === 0) {
+            return median;
+        }
+
+        if (tightValues.length === 1) {
+            return tightValues[0]!;
+        }
+
+        let weightedSum: number = 0;
+        let weightTotal: number = 0;
+
+        for (let i = 0; i < tightValues.length; i++) {
+            const ageWeight: number = Math.exp(-i * 0.4);
+            const proximityWeight: number = Math.exp(
+                -Math.abs(tightValues[i]! - median) / (median * 0.3),
+            );
+            const weight: number = ageWeight * proximityWeight;
+
+            weightedSum += tightValues[i]! * weight;
+            weightTotal += weight;
+        }
+
+        const result: number = weightedSum / (weightTotal + 0.001);
+        return Number.isFinite(result) ? result : median;
     };
 
     const analyzeAudio = (): void => {
@@ -163,33 +212,40 @@ export function useTuner() {
 
         if (
             rawFrequency &&
-            rawFrequency > FrequencyConstants.MinDetection &&
-            rawFrequency < FrequencyConstants.MaxDetection
+            Number.isFinite(rawFrequency) &&
+            rawFrequency >= FrequencyConstants.MinDetection &&
+            rawFrequency <= FrequencyConstants.MaxDetection
         ) {
             const smoothedFrequency: number = smoothValue(frequencyBuffer.value, rawFrequency);
-            currentFrequency.value = smoothedFrequency;
+            currentFrequency.value = Number.isFinite(smoothedFrequency) ? smoothedFrequency : 0;
 
             const { note, cents } = frequencyToNote(smoothedFrequency);
             currentNote.value = note;
 
-            const smoothedDeviation: number = smoothValue(deviationBuffer.value, cents);
-            deviation.value = Math.round(smoothedDeviation);
+            const finiteCents: number = Number.isFinite(cents) ? cents : 0;
+            const smoothedDeviation: number = smoothValue(deviationBuffer.value, finiteCents);
+            deviation.value = Number.isFinite(smoothedDeviation)
+                ? Math.round(smoothedDeviation)
+                : 0;
 
             const newStatus: DetectionStatus = getDetectionStatus(smoothedDeviation);
             detectionStatus.value = newStatus;
 
             handleSuccessSound(smoothedDeviation);
         } else {
-            detectionStatus.value = DetectionStatus.Unstable;
-            resetTuneDetection();
-            frequencyBuffer.value = [];
-            deviationBuffer.value = [];
+            if (currentFrequency.value === 0) {
+                detectionStatus.value = DetectionStatus.Unstable;
+            }
         }
 
         animationFrameId = requestAnimationFrame(analyzeAudio);
     };
 
     const handleSuccessSound = (currentDeviation: number): void => {
+        if (!Number.isFinite(currentDeviation)) {
+            return;
+        }
+
         const now: number = Date.now();
         const isPreciselyInTune: boolean = Math.abs(currentDeviation) <= getSuccessThreshold.value;
 
@@ -223,7 +279,6 @@ export function useTuner() {
 
     const playSuccessSound = (): void => {
         const baseFrequency: number = activeString.value.frequency;
-
         playReferenceNote({
             frequency: baseFrequency * 2,
             duration: SUCCESS_SOUND_DURATION_MS,

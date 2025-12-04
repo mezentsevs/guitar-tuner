@@ -89,19 +89,36 @@ export const NoteNames: Note[] = [
 export const FrequencyConstants = {
     A4: 440,
     C0: 16.35,
-    MinDetection: 0,
+    MinDetection: 1,
     MaxDetection: 2000,
-    RmsThreshold: 0.01,
-    CorrelationThreshold: 0.01,
-    GoodCorrelationThreshold: 0.9,
+    RmsThreshold: 0.008,
+    CorrelationThreshold: 0.15,
+    GoodCorrelationThreshold: 0.8,
+    MinConfidence: 0.6,
+    WindowSize: 7,
+    MedianFilterSize: 7,
+    BandpassMin: 1,
+    BandpassMax: 2000,
+    MinGuitarFrequency: 1,
+    MaxGuitarFrequency: 2000,
+    StuckFrequencyThreshold: 0.95,
 } as const;
 
 export const DetectionThresholds = {
     InTuneLow: -20,
     InTuneHigh: 20,
     CentRange: 50,
-    MaxSamplesDivisor: 2,
-    InitialOffset: 4,
+    MaxSamplesDivisor: 2.5,
+    InitialOffset: 6,
+    ConfidenceDecay: 0.1,
+    PeakProminence: 1.5,
+    HarmonicRatio: 0.3,
+    MinFrequencyGuitar: 1,
+    MaxFrequencyGuitar: 2000,
+    NoiseRejection: 0.4,
+    OctaveTolerance: 0.15,
+    StagnationReset: 0.1,
+    DynamicRange: 0.3,
 } as const;
 
 export const StandardFrequencies = {
@@ -153,12 +170,13 @@ export const StandardFrequencies = {
 } as const;
 
 export const AudioSettings = {
-    FftSize: 2048,
+    FftSize: 8192,
     OscillatorType: 'sine' as OscillatorType,
     GainRampDuration: 0.1,
     ReferenceNoteDuration: 2000,
     MinGain: 0.001,
     MaxGain: 0.3,
+    SampleRate: 44100,
 } as const;
 
 export const TuningPresets = {
