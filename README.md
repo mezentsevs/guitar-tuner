@@ -8,7 +8,7 @@ Please be aware that this application is in active development. While the core t
 
 This is a guitar tuner, written in and for educational and demonstrational purposes.
 
-An online professional guitar tuner with real-time audio analysis - works directly in the browser without additional software installation. Provides precise tuning through microphone, intuitive interface, and support for various tunings.
+An online professional guitar tuner with real-time audio analysis - works directly in the browser without additional software installation. Provides precise tuning through microphone with advanced autocorrelation algorithm, intuitive interface, and support for various tunings including custom configurations. Features professional-grade accuracy with harmonic filtering and edge case protection.
 
 Based on tech stack:
 - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML),
@@ -38,11 +38,13 @@ Based on tech stack:
 - Local Storage: All settings and custom tunings saved locally
 
 ### Advanced Algorithms
-- Adaptive Frequency Detection: Different buffer sizes and thresholds for low/high frequencies
-- Intelligent Success Detection: Plays confirmation sound after stable tuning
-- Noise Filtering: Advanced signal processing with RMS thresholding
-- Smooth Averaging: Weighted moving average for stable readings
-- Octave Handling: Smart reference note generation across frequency ranges
+- Enhanced Autocorrelation Algorithm: Advanced pitch detection with adaptive windowing and median filtering
+- Harmonic Filtering: Intelligent rejection of octave harmonics and noise
+- Stagnation Prevention: Dynamic buffer reset to prevent frequency "sticking"
+- Robust Signal Validation: Multiple validation stages with confidence scoring
+- Edge Case Protection: Safe handling of extreme frequencies and NaN values
+- Adaptive Smoothing: Weighted moving average with exponential decay for stable readings
+- Octave Correction: Smart frequency doubling/halving for out-of-range detection
 
 ## Getting Started (Nuxt Minimal Starter)
 
@@ -130,12 +132,14 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 - Performance Use: Quick tuning checks during rehearsal or performance
 
 ### Technical Specifications
-- Frequency Range: 0-2000 Hz detection
-- Precision: ±1 cent resolution
-- Audio Processing: 4096-point FFT with autocorrelation
-- Responsive Design: Mobile-first adaptive interface
+- Frequency Detection Range: 1-2000 Hz with safe edge case handling
+- Precision: ±1 cent resolution with professional-grade accuracy
+- Audio Processing: 8192-point FFT with optimized autocorrelation algorithm
+- Signal Processing: RMS-based noise rejection with dynamic thresholding
+- Real-Time Analysis: 60fps continuous audio processing
+- Responsive Design: Mobile-first adaptive interface with grid-based layouts
 - Browser Support: Modern browsers with Web Audio API support
-- Zero Installation: Works entirely in browser
+- Zero Installation: Works entirely in browser with local storage persistence
 
 ## Technical Implementation
 
