@@ -172,6 +172,23 @@ Recommended browsers:
 
 ## Screenshots
 
+<img width="1920" height="1200" alt="2025-12-03_20-04-25" src="https://github.com/user-attachments/assets/e04963e1-f184-4fc6-bdd7-9a3329cef2b1" />
+<img width="1920" height="1200" alt="2025-12-03_20-05-32" src="https://github.com/user-attachments/assets/454ce8d4-56ff-4c89-8630-1f0d4e7ab853" />
+<img width="1920" height="1200" alt="2025-12-03_20-06-51" src="https://github.com/user-attachments/assets/c8f109da-bef5-4e7d-a706-0d7a8def6bea" />
+<img width="1920" height="1200" alt="2025-12-03_20-07-41" src="https://github.com/user-attachments/assets/88f8250a-90db-4923-b5d8-5e8c9126df70" />
+<img width="1920" height="1200" alt="2025-12-03_20-10-03" src="https://github.com/user-attachments/assets/13f67113-2e28-4224-a6cd-2fd15b94112a" />
+<img width="1920" height="1200" alt="2025-12-03_20-18-52" src="https://github.com/user-attachments/assets/ef6a0de0-1647-462d-ac6b-1b392db87708" />
+<img width="1920" height="1200" alt="2025-12-03_23-21-33" src="https://github.com/user-attachments/assets/1b67ba25-f076-421c-affc-483e325b74ff" />
+<img width="1920" height="1200" alt="2025-12-03_23-24-47" src="https://github.com/user-attachments/assets/1405ef8c-e659-41c8-a1d4-509dea4cecbd" />
+<img width="1920" height="1200" alt="2025-12-03_23-29-11" src="https://github.com/user-attachments/assets/68b59c5e-b9d6-429e-ad6e-8c1a15e402b3" />
+<img width="1920" height="1200" alt="2025-12-03_23-30-42" src="https://github.com/user-attachments/assets/47ee5bfa-7548-4454-8191-ba93ed60e32d" />
+<img width="1920" height="1200" alt="2025-12-03_23-37-55" src="https://github.com/user-attachments/assets/c3979a3e-137f-499c-80d6-8ccd39e9f10f" />
+<img width="1920" height="1200" alt="2025-12-03_23-40-12" src="https://github.com/user-attachments/assets/70076bb6-837c-4930-a119-612a3b375384" />
+<img width="1920" height="1200" alt="2025-12-03_23-41-48" src="https://github.com/user-attachments/assets/5460fcab-c449-4da7-a5d7-c618652a0df6" />
+<img width="1920" height="1200" alt="2025-12-03_23-43-20" src="https://github.com/user-attachments/assets/c2be48b6-6998-4f2d-8c33-ec21305769c2" />
+<img width="1920" height="1200" alt="2025-12-03_23-45-27" src="https://github.com/user-attachments/assets/158298dd-6f43-4821-8046-fa19c4221678" />
+<img width="1920" height="1200" alt="2025-12-03_23-46-40" src="https://github.com/user-attachments/assets/4b1e174b-14c5-4b7d-ae40-57f029009359" />
+
 ## License
 
 The 'Guitar tuner' is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
