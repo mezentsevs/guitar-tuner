@@ -139,8 +139,10 @@ export function useTuner() {
         if (!Number.isFinite(newValue)) {
             if (buffer.length > 0) {
                 const lastValid: number = buffer[buffer.length - 1]!;
+
                 return Number.isFinite(lastValid) ? lastValid : 0;
             }
+
             return 0;
         }
 
@@ -200,6 +202,7 @@ export function useTuner() {
         }
 
         const result: number = weightedSum / (weightTotal + 0.001);
+
         return Number.isFinite(result) ? result : median;
     };
 

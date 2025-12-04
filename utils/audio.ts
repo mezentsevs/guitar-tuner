@@ -45,11 +45,11 @@ export class AudioProcessor {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.analyser.getFloatTimeDomainData(this.dataArray as any);
         const sampleRate: number = this.audioContext?.sampleRate || AudioSettings.SampleRate;
-
         const rawFrequency: number | null = this.autoCorrelate(this.dataArray, sampleRate);
 
         if (!rawFrequency) {
             this.confidence = Math.max(0, this.confidence - DetectionThresholds.ConfidenceDecay);
+
             return this.confidence > DetectionThresholds.NoiseRejection
                 ? this.lastValidFrequency
                 : null;
@@ -67,10 +67,12 @@ export class AudioProcessor {
             }
 
             const result: number = this.calculateRobustMedian();
+
             return Number.isFinite(result) ? result : null;
         }
 
         this.confidence = Math.max(0, this.confidence - DetectionThresholds.ConfidenceDecay);
+
         return this.confidence > DetectionThresholds.NoiseRejection
             ? this.lastValidFrequency
             : null;
@@ -82,10 +84,12 @@ export class AudioProcessor {
         const correlations: number[] = new Array(maxSamples).fill(0);
 
         let rms: number = 0;
+
         for (let i = 0; i < size; i++) {
             const val: number = buffer[i]!;
             rms += val * val;
         }
+
         rms = Math.sqrt(rms / size);
 
         if (rms < FrequencyConstants.RmsThreshold || !Number.isFinite(rms)) {
@@ -147,14 +151,17 @@ export class AudioProcessor {
             y1 > y2 * DetectionThresholds.PeakProminence
         ) {
             const denominator: number = 2 * (y2 - 2 * y1 + y0 + 0.001);
+
             if (Math.abs(denominator) > 0.0001) {
                 const peakOffset: number = x1 - (y2 - y0) / denominator;
                 const result: number = sampleRate / Math.max(peakOffset, 1);
+
                 return Number.isFinite(result) ? result : 0;
             }
         }
 
         const freq: number = sampleRate / bestOffset;
+
         return Number.isFinite(freq) ? freq : 0;
     }
 
@@ -231,6 +238,7 @@ export class AudioProcessor {
         }
 
         const result: number = weightedSum / (weightSum + 0.001);
+
         return Number.isFinite(result) ? result : median;
     }
 
