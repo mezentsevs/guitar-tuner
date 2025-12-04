@@ -2,7 +2,7 @@
 
 ## Note on Future Development
 
-Please be aware that this application is in active development. While the core tuning functionality and basic features have been thoroughly tested, the project is continuously evolving with planned improvements and additional capabilities. Future updates may introduce enhanced audio processing algorithms, support for more instruments, advanced visualization features, and refined user experience. If you encounter any issues, have suggestions for improvements, or would like to contribute to the project, your input is greatly appreciated - feel free to open an issue or pull request, and we can work together to make this tuner even better. Thank you for your understanding and support.
+Please be aware that this application is in active development. While the core tuning functionality and basic features have been thoroughly tested, the project is continuously evolving with planned improvements and additional capabilities. Future updates may introduce enhanced audio processing algorithms, support for more instruments, advanced visualization features, and refined user experience. If you encounter any issues or have suggestions for improvements, your input is greatly appreciated - feel free to open an issue. Thank you for your understanding and support.
 
 ## About 'Guitar tuner'
 
