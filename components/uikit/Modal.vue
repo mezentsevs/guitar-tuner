@@ -1,7 +1,9 @@
 <template>
     <Transition name="modal">
         <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70" />
+            <div
+                class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70"
+                @click="$emit('close')" />
             <div
                 class="relative z-10 bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-md w-full max-h-[90vh] custom-scroll-container transition-colors duration-300">
                 <div class="p-6">
