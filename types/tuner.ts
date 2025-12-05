@@ -102,6 +102,7 @@ export const FrequencyConstants = {
     MinGuitarFrequency: 1,
     MaxGuitarFrequency: 2000,
     StuckFrequencyThreshold: 0.95,
+    CentsPerOctave: 1200,
 } as const;
 
 export const DetectionThresholds = {

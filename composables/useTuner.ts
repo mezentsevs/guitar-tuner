@@ -13,9 +13,65 @@ const HIGH_FREQ_STABILITY_DURATION_MS = 600;
 const SUCCESS_SOUND_COOLDOWN_MS = 1500;
 const SUCCESS_SOUND_DURATION_MS = 300;
 const SUCCESS_SOUND_VOLUME = 0.8;
+const MAX_REASONABLE_DEVIATION = 1000;
+const OCTAVE_TOLERANCE_LOWER = 0.5;
+const OCTAVE_TOLERANCE_UPPER = 2.0;
 
 const CUSTOM_TUNINGS_STORAGE_KEY = 'guitar-tuner-custom-tunings';
 const SELECTED_TUNING_STORAGE_KEY = 'guitar-tuner-selected-tuning';
+
+const calculateCentsDeviation = (measuredFrequency: number, referenceFrequency: number): number => {
+    if (!Number.isFinite(measuredFrequency) || !Number.isFinite(referenceFrequency)) {
+        return 0;
+    }
+
+    if (referenceFrequency <= 0 || measuredFrequency <= 0) {
+        return 0;
+    }
+
+    const ratio = measuredFrequency / referenceFrequency;
+
+    if (ratio <= 0) {
+        return 0;
+    }
+
+    const cents = FrequencyConstants.CentsPerOctave * Math.log2(ratio);
+
+    if (!Number.isFinite(cents)) {
+        return 0;
+    }
+
+    if (Math.abs(cents) > MAX_REASONABLE_DEVIATION) {
+        return 0;
+    }
+
+    return cents;
+};
+
+const correctOctave = (measuredFrequency: number, referenceFrequency: number): number => {
+    if (!Number.isFinite(measuredFrequency) || !Number.isFinite(referenceFrequency)) {
+        return measuredFrequency;
+    }
+
+    if (referenceFrequency <= 0 || measuredFrequency <= 0) {
+        return measuredFrequency;
+    }
+
+    let corrected = measuredFrequency;
+    const ratio = corrected / referenceFrequency;
+
+    if (ratio < OCTAVE_TOLERANCE_LOWER) {
+        while (corrected / referenceFrequency < OCTAVE_TOLERANCE_LOWER) {
+            corrected *= 2;
+        }
+    } else if (ratio >= OCTAVE_TOLERANCE_UPPER) {
+        while (corrected / referenceFrequency >= OCTAVE_TOLERANCE_UPPER) {
+            corrected /= 2;
+        }
+    }
+
+    return corrected;
+};
 
 export function useTuner() {
     const { initialize, getCurrentFrequency, playReferenceNote, isInitialized } = useAudio();
@@ -114,14 +170,25 @@ export function useTuner() {
         localStorage.setItem(SELECTED_TUNING_STORAGE_KEY, currentTuning.value.id);
     };
 
+    const initializeFrequencyBuffer = (): void => {
+        const bufferSize = getBufferSize.value;
+        const referenceFrequency = activeString.value.frequency;
+        frequencyBuffer.value = Array(bufferSize).fill(referenceFrequency);
+    };
+
+    const initializeDeviationBuffer = (): void => {
+        const bufferSize = getBufferSize.value;
+        deviationBuffer.value = Array(bufferSize).fill(0);
+    };
+
     const startListening = async (): Promise<void> => {
         if (!isInitialized.value) {
             await initialize();
         }
 
         isListening.value = true;
-        frequencyBuffer.value = [];
-        deviationBuffer.value = [];
+        initializeFrequencyBuffer();
+        initializeDeviationBuffer();
         analyzeAudio();
     };
 
@@ -219,13 +286,22 @@ export function useTuner() {
             rawFrequency >= FrequencyConstants.MinDetection &&
             rawFrequency <= FrequencyConstants.MaxDetection
         ) {
-            const smoothedFrequency: number = smoothValue(frequencyBuffer.value, rawFrequency);
+            const correctedFrequency = correctOctave(rawFrequency, activeString.value.frequency);
+            const smoothedFrequency: number = smoothValue(
+                frequencyBuffer.value,
+                correctedFrequency,
+            );
+
             currentFrequency.value = Number.isFinite(smoothedFrequency) ? smoothedFrequency : 0;
 
-            const { note, cents } = frequencyToNote(smoothedFrequency);
+            const note = frequencyToNote(smoothedFrequency);
             currentNote.value = note;
 
-            const finiteCents: number = Number.isFinite(cents) ? cents : 0;
+            const centsDeviation: number = calculateCentsDeviation(
+                smoothedFrequency,
+                activeString.value.frequency,
+            );
+            const finiteCents: number = Number.isFinite(centsDeviation) ? centsDeviation : 0;
             const smoothedDeviation: number = smoothValue(deviationBuffer.value, finiteCents);
             deviation.value = Number.isFinite(smoothedDeviation)
                 ? Math.round(smoothedDeviation)
@@ -300,8 +376,8 @@ export function useTuner() {
         deviation.value = 0;
         detectionStatus.value = DetectionStatus.Unstable;
         resetTuneDetection();
-        frequencyBuffer.value = [];
-        deviationBuffer.value = [];
+        initializeFrequencyBuffer();
+        initializeDeviationBuffer();
     };
 
     const playActiveString = (): void => {
