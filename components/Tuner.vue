@@ -14,13 +14,12 @@
             </div>
 
             <!-- Main Content -->
-            <div class="grid lg:grid-cols-4 gap-8 justify-center lg:items-stretch">
-                <!-- Tuning Controls -->
-                <div
-                    class="lg:col-span-1 space-y-6 lg:space-y-0 lg:flex lg:flex-col lg:gap-6 lg:h-full">
+            <div class="grid lg:grid-cols-4 gap-8">
+                <!-- Left Sidebar - Tuning, Controls, Input -->
+                <div class="lg:col-span-1 grid gap-6 auto-rows-fr h-full">
                     <!-- Tuning Selector -->
                     <div
-                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
+                        class="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Tuning
                         </h2>
@@ -41,7 +40,7 @@
 
                     <!-- Controls -->
                     <div
-                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
+                        class="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Controls
                         </h2>
@@ -69,43 +68,45 @@
 
                     <!-- Frequency Display -->
                     <div
-                        class="lg:flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
+                        class="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Input
                         </h2>
-                        <div class="flex-1 flex items-center justify-center">
-                            <div
-                                v-if="currentFrequency > 0"
-                                class="space-y-2 w-full transition-all duration-300 ease-in-out text-center -mt-4">
-                                <div class="text-3xl font-bold text-gray-900 dark:text-white">
-                                    {{ currentFrequency.toFixed(2) }} Hz
+                        <div class="flex-1 relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div v-if="currentFrequency > 0" class="text-center -mt-4">
+                                    <div
+                                        class="text-3xl font-bold text-gray-900 dark:text-white mb-1">
+                                        {{ currentFrequency.toFixed(2) }} Hz
+                                    </div>
+                                    <div class="text-xl text-gray-700 dark:text-gray-400">
+                                        {{ currentNote }}
+                                    </div>
                                 </div>
-                                <div class="text-xl text-gray-700 dark:text-gray-400">
-                                    {{ currentNote }}
+                                <div v-else class="text-center animate-pulse -mt-4">
+                                    <WaveIcon
+                                        class="w-10 h-10 mx-auto text-gray-400 dark:text-gray-500 opacity-60" />
+                                    <p class="text-sm text-gray-400 dark:text-gray-500 mt-2">
+                                        Start tuning
+                                    </p>
                                 </div>
-                            </div>
-                            <div
-                                v-else
-                                class="flex flex-col items-center text-gray-400 animate-pulse space-y-3 w-full -mt-4">
-                                <WaveIcon class="w-10 h-10 opacity-60" />
-                                <p class="text-sm">Start tuning</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Strings Grid -->
-                <div class="lg:col-span-3 lg:h-full">
+                <div class="lg:col-span-3">
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col min-h-[500px] lg:min-h-0 lg:h-full w-full">
+                        class="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-sm border border-gray-200 dark:border-none p-6 transition-colors duration-300 flex flex-col min-h-[500px] lg:min-h-0 h-full w-full">
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
                             Strings
                         </h2>
 
                         <div class="flex-1 flex items-center justify-center">
                             <div
-                                :class="[gridLayoutClass, containerMinWidthClass]"
-                                class="w-fit mx-auto">
+                                :class="gridLayoutClass"
+                                class="w-fit mx-auto min-w-[336px] sm:min-w-0">
                                 <StringIndicator
                                     v-for="(string, index) in currentTuning.strings"
                                     :key="index"
@@ -169,11 +170,11 @@ const stringGridLayouts: Record<number, string> = {
     1: 'grid grid-cols-1 gap-4 justify-items-center',
     2: 'grid grid-cols-2 gap-4',
     3: 'grid grid-cols-2 sm:grid-cols-3 gap-4',
-    4: 'grid grid-cols-2 sm:grid-cols-4 gap-4',
+    4: 'grid grid-cols-2 md:grid-cols-4 gap-4',
     5: 'grid grid-cols-2 sm:grid-cols-3 gap-4',
     6: 'grid grid-cols-2 sm:grid-cols-3 gap-4',
-    7: 'grid grid-cols-2 sm:grid-cols-4 gap-4',
-    8: 'grid grid-cols-2 sm:grid-cols-4 gap-4',
+    7: 'grid grid-cols-2 md:grid-cols-4 gap-4',
+    8: 'grid grid-cols-2 md:grid-cols-4 gap-4',
     9: 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4',
     10: 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4',
 };
@@ -182,10 +183,6 @@ const gridLayoutClass = computed((): string => {
     const stringCount = currentTuning.value.strings.length;
 
     return stringGridLayouts[stringCount] || stringGridLayouts[10]!;
-});
-
-const containerMinWidthClass = computed((): string => {
-    return currentTuning.value.strings.length === 1 ? 'min-w-0' : 'min-w-[336px] sm:min-w-0';
 });
 
 const toggleListening = async (): Promise<void> => {
