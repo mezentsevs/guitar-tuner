@@ -1,9 +1,5 @@
 # Guitar tuner
 
-## Note on Future Development
-
-Please be aware that this application is in active development. While the core tuning functionality and basic features have been thoroughly tested, the project is continuously evolving with planned improvements and additional capabilities. Future updates may introduce enhanced audio processing algorithms, support for more instruments, advanced visualization features, and refined user experience. Thank you for your understanding and support.
-
 ## About 'Guitar tuner'
 
 This is a guitar tuner, written in and for educational and demonstrational purposes.
