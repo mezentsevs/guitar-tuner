@@ -189,6 +189,13 @@ Recommended browsers:
 <img width="1920" height="1200" alt="2025-12-06_15-59-35" src="https://github.com/user-attachments/assets/f153c5a9-b8d6-4aba-94bf-e33b4bb36a5f" />
 <img width="1920" height="1200" alt="2025-12-06_16-00-52" src="https://github.com/user-attachments/assets/f061e0b4-ccaf-40cf-9f8f-a5ed6129ccbc" />
 
+## ⭐ If You Found This Useful
+
+If this project helped you - whether it saved you time, taught you something, or gave you an idea - please consider leaving a star or a like.
+A ⭐, 👍, ❤️, or 💎 tells me that the work matters. It's a small gesture that genuinely fuels my motivation to keep improving the project and building new tools.
+
+Thanks for your interest in this project!
+
 ## License
 
 The 'Guitar tuner' is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
